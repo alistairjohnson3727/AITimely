@@ -25,23 +25,24 @@ public class dbInstall
     objAccess.createTable(tableStatement, dbName);
     //Employee table
     String employeeLogin =
-      "CREATE TABLE EmployeeLogin(employeeID int, username varchar(55), password varchar(55))";
+      "CREATE TABLE EmployeeLogin(employeeID int PRIMARY KEY, username varchar(55), password varchar(55))";
     objAccess.createTable(employeeLogin, dbName);
     //Manager table
     String managerLogin = 
-      "CREATE TABLE ManagerLogin(managerID int, username varchar(55), password varchar(55))";
+      "CREATE TABLE ManagerLogin(managerID int PRIMARY KEY, username varchar(55), password varchar(55))";
     objAccess.createTable(managerLogin, dbName);
     //table that assigns employees to managers
     String EmployeeManager = 
-      "CREATE TABLE EmployeeManager(managerID int, employeeID int)";
+      "CREATE TABLE EmployeeManager(managerID int, employeeID int, PRIMARY KEY(managerID, employeeID))";
+    
     objAccess.createTable(EmployeeManager, dbName);
     //shift table
     String Shift =
-      "CREATE TABLE Shift(shiftID int, description varchar(200), date DATE)";
+      "CREATE TABLE Shift(shiftID int PRIMARY KEY, description varchar(200), date DATE)";
     objAccess.createTable(Shift, dbName);
     //table that assigns Shifts to employees
     String ShiftEmployee =
-      "CREATE TABLE ShiftEmployee(shiftID int, employeeID int)";
+      "CREATE TABLE ShiftEmployee(shiftID int, employeeID int, PRIMARY KEY(shiftID, employeeID))";
     objAccess.createTable(ShiftEmployee, dbName);
   }
   
