@@ -122,6 +122,25 @@ public class dbAccess
       return false;
     }
   }
+  
+  public boolean addEmployeeAcc(int employeeID, String user, String pass)
+  {
+    String query = "INSERT INTO EmployeeLogin VALUES (?, ?, ?)";
+    return addRecord(query, new Object[]{employeeID, user, pass});
+  }
+  
+  public boolean addManagerAcc(int managerID, String user, String pass)
+  {
+    String query = "INSERT INTO ManagerLogin VALUES (?, ?, ?)";
+    return addRecord(query, new Object[]{managerID, user, pass});
+  }
+  
+  public boolean addShift(int shiftID, String description, String date)
+  {
+    String query = "INSERT INTO Shift VALUES (?, ?, ?)";
+    return addRecord(query, new Object[]{shiftID, description, date});
+  }
+  
 
   //UPDATE record in table
   //works for all tables, but you must give the query
@@ -150,7 +169,7 @@ public class dbAccess
 
   //REMOVE record from table
   //works for all tables, but you must give the query
-  public boolean removeRecord(String deleteQuery, Object[] values)
+  private boolean removeRecord(String deleteQuery, Object[] values)
   {
     try
     {
@@ -281,6 +300,7 @@ public class dbAccess
     // ADD
     String insert = "INSERT INTO TestDatabase VALUES (?, ?, ?)";
     db.addRecord(insert, new Object[]{33, "Project1", "RN"});
+    
 
     //testing if it works for other classes
     String insert2 = "INSERT INTO EmployeeLogin VALUES (?, ?, ?)";
