@@ -196,21 +196,8 @@ public class dbAccess
     String query = "UPDATE Shift SET description=?, date=? WHERE shiftID=?";
     return updateRecord(query, new Object[]{description, date, shiftID});
   }
-  //update EmployeeManager
-  public boolean updateEmployeeManager(int managerId, int employeeId, int newManagerId, int newEmployeeId) 
-  {
-    String query = "UPDATE EmployeeManager SET managerID=? AND employeeID=? WHERE managerID=? AND employeeID=?";
-    return updateRecord(query, new Object[]{newManagerId, newEmployeeId, managerId, employeeId});
-  }
-  
-  //update EmployeeShift
-  public boolean updateEmployeeShift(int employeeId, int shiftId, int newEmployeeId, int newShiftId) 
-  {
-    String query = "UPDATE EmployeeShift SET shiftID=? AND employeeID=? WHERE shiftID=? AND employeeID=?";
-    return updateRecord(query, new Object[]{newShiftId, newEmployeeId, shiftId, employeeId});
-  }
 
-  
+  //No need for update on EmployeeManager or EmployeeShift, as it is just assigning id's to either. ID's cannot be changed. 
   
   
   //REMOVE record from table
@@ -407,7 +394,10 @@ public class dbAccess
     db.addEmployeeManager(3, 0);
     db.addShiftEmployee(4, 0);
     
-    
+    db.updateEmployee(0, "fart", "123you");
+    db.updateManager(3, "frank", "Iheartcode");
+    db.updateShift(4, "workaboutsmth", "2026-11-12");
+
     
     db.removeEmployee(0);
     db.removeManager(3);
