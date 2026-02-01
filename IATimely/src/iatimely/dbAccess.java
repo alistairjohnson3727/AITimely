@@ -76,7 +76,9 @@ public class dbAccess
     }
   }
 
-
+  /* =======================
+     ADD (INSERT)
+     ======================= */
   public boolean addRecord(String insertQuery, Object[] values)
   {
     try
@@ -227,7 +229,9 @@ public class dbAccess
     }
   }
 
-
+  /* =======================
+     TEST MAIN
+     ======================= */
   public static void main(String[] args)
   {
     dbAccess db = new dbAccess("iaTimely");
