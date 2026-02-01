@@ -1,5 +1,13 @@
-package iatimely;
+// Alistair Johnson
+// 1/31/2026
+/*
+This class is allows me to access my tables. I can view, add, remove, and update
+to any table I want. This class also creates tables and the database. 
+*/
 
+
+package iatimely;
+//import
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.sql.DriverManager;
@@ -8,12 +16,17 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+//Database access class
 public class dbAccess
 {
+  //database name
   private String dbName;
+  //database connection
   private Connection dbConn;
+  //data from database
   private ArrayList<ArrayList<String>> data;
   
+  //default constructor
   public dbAccess()
   {
     this.dbName = "";
@@ -21,36 +34,44 @@ public class dbAccess
     this.data = null;
   }
 
+  //constructor with database name
   public dbAccess(String dbName)
   {
     this.dbName = dbName;
-    setdbConn();
+    setdbConn(); //connect to database
     this.data = null;
   }
 
+  //get database name
   public String getdbName()
   {
     return dbName;
   }
 
+  //set database name
   public void setdbName(String dbName)
   {
     this.dbName = dbName;
   }
 
+  //get database connection
   public Connection getDbConn()
   {
     return dbConn;
   }
 
+  //connect to mysql database
   public void setdbConn()
   {
+    //connection url
     String connectionURL =
       "jdbc:mysql://localhost:3306/" + this.dbName;
     this.dbConn = null;
     try
     {
+      //load mysql driver
       Class.forName("com.mysql.cj.jdbc.Driver");
+      //connect to database
       this.dbConn = DriverManager.getConnection(
         connectionURL, "root", "mysql1");
     }
@@ -64,6 +85,7 @@ public class dbAccess
     }
   }
 
+  //close database connection
   public void closeDbConn()
   {
     try
@@ -76,16 +98,19 @@ public class dbAccess
     }
   }
 
-
+  //ADD record to table
   public boolean addRecord(String insertQuery, Object[] values)
   {
     try
     {
+      //prepare sql statement
       PreparedStatement ps = this.dbConn.prepareStatement(insertQuery);
+      //set values
       for (int i = 0; i < values.length; i++)
       {
         ps.setObject(i + 1, values[i]);
       }
+      //execute insert
       ps.executeUpdate();
       ps.close();
       return true;
@@ -97,16 +122,19 @@ public class dbAccess
     }
   }
 
-
+  //UPDATE record in table
   public boolean updateRecord(String updateQuery, Object[] values)
   {
     try
     {
+      //prepare sql statement
       PreparedStatement ps = this.dbConn.prepareStatement(updateQuery);
+      //set values
       for (int i = 0; i < values.length; i++)
       {
         ps.setObject(i + 1, values[i]);
       }
+      //execute update
       ps.executeUpdate();
       ps.close();
       return true;
@@ -118,16 +146,19 @@ public class dbAccess
     }
   }
 
-
+  //REMOVE record from table
   public boolean removeRecord(String deleteQuery, Object[] values)
   {
     try
     {
+      //prepare sql statement
       PreparedStatement ps = this.dbConn.prepareStatement(deleteQuery);
+      //set values
       for (int i = 0; i < values.length; i++)
       {
         ps.setObject(i + 1, values[i]);
       }
+      //execute delete
       ps.executeUpdate();
       ps.close();
       return true;
@@ -139,6 +170,7 @@ public class dbAccess
     }
   }
 
+  //convert arraylist to 2d array
   public Object[][] to2dArray(ArrayList<ArrayList<String>> data)
   {
     if(data.size() == 0)
@@ -160,18 +192,23 @@ public class dbAccess
     }
   }
 
+  //get all data from a table
   public ArrayList<ArrayList<String>> getTable(String tableName, String[] columns)
   {
     int columnCount = columns.length;
     Statement s;
     ResultSet rs;
+    //sql select query
     String dbQuery = "SELECT * FROM " + tableName;
     this.data = new ArrayList<>();
 
     try
     {
+      //create statement
       s = this.dbConn.createStatement();
+      //run query
       rs = s.executeQuery(dbQuery);
+      //loop through results
       while(rs.next())
       {
         ArrayList<String> row = new ArrayList<>();
@@ -189,6 +226,7 @@ public class dbAccess
     return data;
   }
 
+  //create new database
   public void createDb(String newDbName)
   {
     setdbName(newDbName);
@@ -210,6 +248,7 @@ public class dbAccess
     }
   }
 
+  //create table in database
   public void createTable(String newTable, String dbName)
   {
     setdbName(dbName);
@@ -227,23 +266,26 @@ public class dbAccess
     }
   }
 
-
   public static void main(String[] args)
   {
+    //Databases name
     dbAccess db = new dbAccess("iaTimely");
     
+    //column names for the TestDatabase
     String[] columnNames =
     {"year", "make", "model"};
     
     // ADD
     String insert = "INSERT INTO TestDatabase VALUES (?, ?, ?)";
     db.addRecord(insert, new Object[]{33, "Project1", "RN"});
+
     //testing if it works for other classes
     String insert2 = "INSERT INTO EmployeeLogin VALUES (?, ?, ?)";
     db.addRecord(insert2, new Object[]{1, "Aly","Aj1308"});
+
     //Testing if viewTable method works, when the other records are deleted from delete
     String insert3 = "INSERT INTO TestDatabase VALUES (?, ?, ?)";
-    db.addRecord(insert, new Object[]{34, "Project", "RN"});
+    db.addRecord(insert3, new Object[]{34, "Project", "RN"});
     
     // UPDATE
     String update =
@@ -255,7 +297,8 @@ public class dbAccess
     String delete =
       "DELETE FROM TestDatabase WHERE year=?";
     db.removeRecord(delete, new Object[]{33});
-
+    
+    // VIEW TABLE
     System.out.println(db.getTable("TestDatabase", columnNames));
   }
 }
