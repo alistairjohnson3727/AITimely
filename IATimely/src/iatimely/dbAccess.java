@@ -141,6 +141,18 @@ public class dbAccess
     return addRecord(query, new Object[]{shiftID, description, date});
   }
   
+  public boolean addEmployeeManager(int managerID, int employeeID)
+  {
+    String query = "INSERT INTO EmployeeManager VALUES (?, ?)";
+    return addRecord(query, new Object[]{managerID, employeeID});
+  }
+  
+  public boolean addShiftEmployee(int ShiftID, int EmployeeID)
+  {
+    String query = "INSERT INTO ShiftEmployee VALUES (?, ?)";
+    return addRecord(query, new Object[]{ShiftID, EmployeeID});
+  }
+  
 
   //UPDATE record in table
   //works for all tables, but you must give the query
