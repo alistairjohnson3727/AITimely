@@ -99,9 +99,7 @@ public class dbAccess
     }
   }
 
-  /* =======================
-     UPDATE
-     ======================= */
+
   public boolean updateRecord(String updateQuery, Object[] values)
   {
     try
@@ -122,9 +120,7 @@ public class dbAccess
     }
   }
 
-  /* =======================
-     REMOVE (DELETE)
-     ======================= */
+
   public boolean removeRecord(String deleteQuery, Object[] values)
   {
     try

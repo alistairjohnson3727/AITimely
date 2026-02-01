@@ -23,6 +23,26 @@ public class dbInstall
     String tableStatement =
       "CREATE TABLE TestDatabase(year int, make varchar(55), model varchar(55))";
     objAccess.createTable(tableStatement, dbName);
+    
+    String employeeLogin =
+      "CREATE TABLE EmployeeLogin(employeeID int, username varchar(55), password varchar(55))";
+    objAccess.createTable(employeeLogin, dbName);
+    
+    String managerLogin = 
+      "CREATE TABLE ManagerLogin(managerID int, username varchar(55), password varchar(55))";
+    objAccess.createTable(managerLogin, dbName);
+    
+    String EmployeeManager = 
+      "CREATE TABLE EmployeeManager(managerID int, employeeID int)";
+    objAccess.createTable(EmployeeManager, dbName);
+    
+    String Shift =
+      "CREATE TABLE Shift(shiftID int, description varchar(200), date DATE)";
+    objAccess.createTable(Shift, dbName);
+    
+    String ShiftEmployee =
+      "CREATE TABLE ShiftEmployee(shiftID int, employeeID int)";
+    objAccess.createTable(ShiftEmployee, dbName);
   }
   
 }
