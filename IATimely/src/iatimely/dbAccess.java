@@ -76,9 +76,7 @@ public class dbAccess
     }
   }
 
-  /* =======================
-     ADD (INSERT)
-     ======================= */
+
   public boolean addRecord(String insertQuery, Object[] values)
   {
     try
@@ -229,9 +227,7 @@ public class dbAccess
     }
   }
 
-  /* =======================
-     TEST MAIN
-     ======================= */
+
   public static void main(String[] args)
   {
     dbAccess db = new dbAccess("iaTimely");
@@ -239,7 +235,10 @@ public class dbAccess
     // ADD
     String insert = "INSERT INTO TestDatabase VALUES (?, ?, ?)";
     db.addRecord(insert, new Object[]{33, "Project1", "RN"});
-
+    
+    String insert2 = "INSERT INTO EmployeeLogin VALUES (?, ?, ?)";
+    db.addRecord(insert2, new Object[]{1, "Aly","Aj1308"});
+      
     // UPDATE
     String update =
       "UPDATE TestDatabase SET make=?, model=? WHERE year=?";
