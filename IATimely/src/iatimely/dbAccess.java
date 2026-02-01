@@ -25,7 +25,7 @@ public class dbAccess
   private Connection dbConn;
   //data from database
   private ArrayList<ArrayList<String>> data;
-  
+
   //default constructor
   public dbAccess()
   {
@@ -99,6 +99,7 @@ public class dbAccess
   }
 
   //ADD record to table
+  //Works for all tables, but you must give the query
   public boolean addRecord(String insertQuery, Object[] values)
   {
     try
@@ -123,6 +124,7 @@ public class dbAccess
   }
 
   //UPDATE record in table
+  //works for all tables, but you must give the query
   public boolean updateRecord(String updateQuery, Object[] values)
   {
     try
@@ -147,6 +149,7 @@ public class dbAccess
   }
 
   //REMOVE record from table
+  //works for all tables, but you must give the query
   public boolean removeRecord(String deleteQuery, Object[] values)
   {
     try
