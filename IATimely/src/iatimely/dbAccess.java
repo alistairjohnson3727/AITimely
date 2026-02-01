@@ -196,9 +196,22 @@ public class dbAccess
     String query = "UPDATE Shift SET description=?, date=? WHERE shiftID=?";
     return updateRecord(query, new Object[]{description, date, shiftID});
   }
+  //update EmployeeManager
+  public boolean updateEmployeeManager(int managerId, int employeeId, int newManagerId, int newEmployeeId) 
+  {
+    String query = "UPDATE EmployeeManager SET managerID=? AND employeeID=? WHERE managerID=? AND employeeID=?";
+    return updateRecord(query, new Object[]{newManagerId, newEmployeeId, managerId, employeeId});
+  }
   
-  //Note: For the other 2 tables, due to them just assigning shifts to employees and assigning managers to employees they do not need update
+  //update EmployeeShift
+  public boolean updateEmployeeShift(int employeeId, int shiftId, int newEmployeeId, int newShiftId) 
+  {
+    String query = "UPDATE EmployeeShift SET shiftID=? AND employeeID=? WHERE shiftID=? AND employeeID=?";
+    return updateRecord(query, new Object[]{newShiftId, newEmployeeId, shiftId, employeeId});
+  }
 
+  
+  
   
   //REMOVE record from table
   //works for all tables, but you must give the query
