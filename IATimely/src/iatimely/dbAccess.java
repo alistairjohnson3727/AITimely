@@ -399,6 +399,14 @@ public class dbAccess
       "DELETE FROM TestDatabase WHERE year=?";
     db.removeRecord(delete, new Object[]{33});
     
+    
+    //testing all the specific table methods
+    db.addEmployeeAcc(0, "poop", "123me");
+    db.addManagerAcc(3, "frlks", "fkjr");
+    db.addShift(4, "workworkwork", "2026-11-11");
+    db.addEmployeeManager(3, 0);
+    db.addShiftEmployee(4, 0);
+    
     // VIEW TABLE
     System.out.println(db.getTable("TestDatabase", columnNames));
   }
