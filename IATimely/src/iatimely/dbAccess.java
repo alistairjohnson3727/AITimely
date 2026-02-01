@@ -76,9 +76,7 @@ public class dbAccess
     }
   }
 
-  /* =======================
-     ADD (INSERT)
-     ======================= */
+
   public boolean addRecord(String insertQuery, Object[] values)
   {
     try
@@ -162,7 +160,7 @@ public class dbAccess
     }
   }
 
-  public ArrayList<ArrayList<String>> getData(String tableName, String[] columns)
+  public ArrayList<ArrayList<String>> getTable(String tableName, String[] columns)
   {
     int columnCount = columns.length;
     Statement s;
@@ -229,20 +227,24 @@ public class dbAccess
     }
   }
 
-  /* =======================
-     TEST MAIN
-     ======================= */
+
   public static void main(String[] args)
   {
     dbAccess db = new dbAccess("iaTimely");
-
+    
+    String[] columnNames =
+    {"year", "make", "model"};
+    
     // ADD
     String insert = "INSERT INTO TestDatabase VALUES (?, ?, ?)";
     db.addRecord(insert, new Object[]{33, "Project1", "RN"});
-    
+    //testing if it works for other classes
     String insert2 = "INSERT INTO EmployeeLogin VALUES (?, ?, ?)";
     db.addRecord(insert2, new Object[]{1, "Aly","Aj1308"});
-      
+    //Testing if viewTable method works, when the other records are deleted from delete
+    String insert3 = "INSERT INTO TestDatabase VALUES (?, ?, ?)";
+    db.addRecord(insert, new Object[]{34, "Project", "RN"});
+    
     // UPDATE
     String update =
       "UPDATE TestDatabase SET make=?, model=? WHERE year=?";
@@ -253,5 +255,7 @@ public class dbAccess
     String delete =
       "DELETE FROM TestDatabase WHERE year=?";
     db.removeRecord(delete, new Object[]{33});
+
+    System.out.println(db.getTable("TestDatabase", columnNames));
   }
 }
