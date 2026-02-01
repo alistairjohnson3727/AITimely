@@ -122,31 +122,31 @@ public class dbAccess
       return false;
     }
   }
-  
+  // add a record to Employee table
   public boolean addEmployeeAcc(int employeeID, String user, String pass)
   {
     String query = "INSERT INTO EmployeeLogin VALUES (?, ?, ?)";
     return addRecord(query, new Object[]{employeeID, user, pass});
   }
-  
+  // add a record to manager table
   public boolean addManagerAcc(int managerID, String user, String pass)
   {
     String query = "INSERT INTO ManagerLogin VALUES (?, ?, ?)";
     return addRecord(query, new Object[]{managerID, user, pass});
   }
-  
+  //add a record to shift table
   public boolean addShift(int shiftID, String description, String date)
   {
     String query = "INSERT INTO Shift VALUES (?, ?, ?)";
     return addRecord(query, new Object[]{shiftID, description, date});
   }
-  
+  //add a record to EmployeeManager table
   public boolean addEmployeeManager(int managerID, int employeeID)
   {
     String query = "INSERT INTO EmployeeManager VALUES (?, ?)";
     return addRecord(query, new Object[]{managerID, employeeID});
   }
-  
+  //add a record to ShiftEmployee table
   public boolean addShiftEmployee(int ShiftID, int EmployeeID)
   {
     String query = "INSERT INTO ShiftEmployee VALUES (?, ?)";
@@ -178,6 +178,20 @@ public class dbAccess
       return false;
     }
   }
+  //update employee
+  public boolean updateEmployee(int employeeID, String username, String password) 
+  {
+    String query = "UPDATE EmployeeLogin SET username=?, password=? WHERE employeeID=?";
+    return updateRecord(query, new Object[]{username, password, employeeID});
+  }
+  //update manager
+  public boolean updateManager(int managerID, String username, String password) 
+  {
+    String query = "UPDATE ManagerLogin SET username=?, password=? WHERE managerID=?";
+    return updateRecord(query, new Object[]{username, password, managerID});
+  }
+  
+  
 
   //REMOVE record from table
   //works for all tables, but you must give the query
