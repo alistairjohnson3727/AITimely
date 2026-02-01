@@ -407,6 +407,14 @@ public class dbAccess
     db.addEmployeeManager(3, 0);
     db.addShiftEmployee(4, 0);
     
+    
+    
+    db.removeEmployee(0);
+    db.removeManager(3);
+    db.removeShift(4);
+    db.removeEmployeeManager(0, 3);
+    db.removeEmployeeShift(0, 4);
+    
     // VIEW TABLE
     System.out.println(db.getTable("TestDatabase", columnNames));
   }
