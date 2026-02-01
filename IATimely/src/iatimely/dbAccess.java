@@ -224,7 +224,39 @@ public class dbAccess
       return false;
     }
   }
-
+  //remove Employee
+  public boolean removeEmployee(int id) 
+  {
+    String query = "DELETE FROM EmployeeLogin WHERE employeeID=?";
+    return removeRecord(query, new Object[]{id});
+  }
+  
+  //remove Employee
+  public boolean removeManager(int id) 
+  {
+    String query = "DELETE FROM ManagerLogin WHERE managerID=?";
+    return removeRecord(query, new Object[]{id});
+  }
+  //remove shift
+  public boolean removeShift(int id)
+  {
+    String query = "DELETE FROM Shift WHERE shiftID=?"; 
+    return removeRecord(query, new Object[]{id});
+  }
+  
+  //remove EmployeeManager
+  public boolean removeEmployeeManager(int EmployeeID, int ManagerID)
+  {
+    String query = "DELETE FROM EmployeeManager WHERE managerID=? AND employeeID=?";
+    return removeRecord(query, new Object[]{EmployeeID, ManagerID});
+  }
+  //remove EmployeeShift
+  public boolean removeEmployeeShift(int EmployeeID, int ShiftID)
+  {
+    String query = "DELETE FROM EmployeeShift WHERE employeeID=? AND shiftID=?";
+    return removeRecord(query, new Object[]{EmployeeID, ShiftID});
+  }
+  
   //convert arraylist to 2d array
   public Object[][] to2dArray(ArrayList<ArrayList<String>> data)
   {
