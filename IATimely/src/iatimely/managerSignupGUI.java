@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
@@ -63,7 +64,32 @@ public class managerSignupGUI extends JFrame implements ActionListener
 
     if (command.equals("Sign up"))
     {
-      // new InsertDisplay(this);
+      if (command.equals("Sign up"))
+      {
+        try
+        {
+          int managerID = Integer.parseInt();
+          String username = userField.getText().trim();
+          String password = passField.getText().trim();
+
+          dbAccess db = new dbAccess("iaTimely");
+          boolean success = db.addManagerAcc(managerID, username, password);
+          db.closeDbConn();
+
+          if (success)
+          {
+            JOptionPane.showMessageDialog(this, "Manager account created!");
+          }
+          else
+          {
+            JOptionPane.showMessageDialog(this, "Sign up failed.");
+          }
+        }
+        catch (NumberFormatException ex)
+        {
+          JOptionPane.showMessageDialog(this, "Invalid Manager ID");
+        }
+      }
     }
   }
 }

@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -19,6 +20,7 @@ import javax.swing.JTextField;
  */
 public class employeeSignUpGUI extends JFrame implements ActionListener
 {
+
   private JLabel titleLabel;
   private JLabel userLabel;
   private JLabel passLabel;
@@ -26,14 +28,13 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
   private JTextField passField;
   private JPanel centerPanel;
   private JButton signUpButton;
-  
+
   public employeeSignUpGUI()
   {
     super("employee sign up");
     this.setBounds(100, 100, 400, 400);
     this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-    
     titleLabel = new JLabel("Sign Up");
     userLabel = new JLabel("Username: ");
     userField = new JTextField(20);
@@ -43,26 +44,48 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
     passField.addActionListener(this);
     signUpButton = new JButton("Sign up");
     signUpButton.addActionListener(this);
-    
+
     centerPanel = new JPanel();
     centerPanel.add(userLabel);
     centerPanel.add(userField);
     centerPanel.add(passLabel);
     centerPanel.add(passField);
-    
+
     this.add(titleLabel, BorderLayout.NORTH);
     this.add(centerPanel, BorderLayout.CENTER);
     this.add(signUpButton, BorderLayout.SOUTH);
     this.setVisible(true);
-  } 
-  
-      public void actionPerformed(ActionEvent e)
-    {
-        String command = e.getActionCommand();
+  }
 
-        if (command.equals("Sign up"))
+  public void actionPerformed(ActionEvent e)
+  {
+    String command = e.getActionCommand();
+
+    if (command.equals("Sign up"))
+    {
+      try
+      {
+        int employeeID = Integer.parseInt();
+        String username = userField.getText().trim();
+        String password = passField.getText().trim();
+
+        dbAccess db = new dbAccess("iaTimely");
+        boolean success = db.addEmployeeAcc(employeeID, username, password);
+        db.closeDbConn();
+
+        if (success)
         {
-            // new InsertDisplay(this);
+          JOptionPane.showMessageDialog(this, "Employee account created!");
         }
+        else
+        {
+          JOptionPane.showMessageDialog(this, "Sign up failed.");
+        }
+      }
+      catch (NumberFormatException ex)
+      {
+        JOptionPane.showMessageDialog(this, "Invalid Employee ID");
+      }
     }
+  }
 }
