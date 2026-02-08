@@ -64,7 +64,7 @@ public class StartGUI extends JFrame implements ActionListener
     String command = err.getActionCommand();
     if (command.equals("Login"))
     {
-      //new InsertDisplay(this);
+      new loginGUI();
     }
     else if(command.equals("Sign up"))
     {
