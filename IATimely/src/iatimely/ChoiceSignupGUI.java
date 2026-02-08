@@ -46,11 +46,11 @@ public class ChoiceSignupGUI extends JFrame implements ActionListener
     String command = err.getActionCommand();
     if (command.equals("Employee"))
     {
-      //new InsertDisplay(this);
+      new employeeSignUpGUI();
     }
     else if(command.equals("Manager"))
     {
-     // new DatabaseDelete(this);
+      new managerSignupGUI();
     }
   }
 }
