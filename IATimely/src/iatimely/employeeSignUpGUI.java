@@ -28,6 +28,8 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
   private JTextField passField;
   private JPanel centerPanel;
   private JButton signUpButton;
+  private JLabel idLabel;
+  private JTextField idField;
 
   public employeeSignUpGUI()
   {
@@ -42,6 +44,9 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
     passLabel = new JLabel("Password: ");
     passField = new JTextField(20);
     passField.addActionListener(this);
+    idLabel = new JLabel("Id:");
+    idField = new JTextField(20);
+    idField.addActionListener(this);
     signUpButton = new JButton("Sign up");
     signUpButton.addActionListener(this);
 
@@ -50,6 +55,8 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
     centerPanel.add(userField);
     centerPanel.add(passLabel);
     centerPanel.add(passField);
+    centerPanel.add(idLabel);
+    centerPanel.add(idField);
 
     this.add(titleLabel, BorderLayout.NORTH);
     this.add(centerPanel, BorderLayout.CENTER);
@@ -65,7 +72,7 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
     {
       try
       {
-        int employeeID = Integer.parseInt();
+        int employeeID = Integer.parseInt(idField.getText().trim());
         String username = userField.getText().trim();
         String password = passField.getText().trim();
 
