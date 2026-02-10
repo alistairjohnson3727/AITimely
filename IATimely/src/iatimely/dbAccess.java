@@ -3,11 +3,10 @@
 /*
 This class is allows me to access my tables. I can view, add, remove, and update
 to any table I want. This class also creates tables and the database. 
-*/
-
-
+ */
 package iatimely;
 //import
+
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.sql.DriverManager;
@@ -19,6 +18,7 @@ import java.sql.ResultSet;
 //Database access class
 public class dbAccess
 {
+
   //database name
   private String dbName;
   //database connection
@@ -64,8 +64,8 @@ public class dbAccess
   public void setdbConn()
   {
     //connection url
-    String connectionURL =
-      "jdbc:mysql://localhost:3306/" + this.dbName;
+    String connectionURL
+      = "jdbc:mysql://localhost:3306/" + this.dbName;
     this.dbConn = null;
     try
     {
@@ -122,37 +122,56 @@ public class dbAccess
       return false;
     }
   }
+
   // add a record to Employee table
   public boolean addEmployeeAcc(int employeeID, String user, String pass)
   {
     String query = "INSERT INTO EmployeeLogin VALUES (?, ?, ?)";
-    return addRecord(query, new Object[]{employeeID, user, pass});
+    return addRecord(query, new Object[]
+    {
+      employeeID, user, pass
+    });
   }
+
   // add a record to manager table
   public boolean addManagerAcc(int managerID, String user, String pass)
   {
     String query = "INSERT INTO ManagerLogin VALUES (?, ?, ?)";
-    return addRecord(query, new Object[]{managerID, user, pass});
+    return addRecord(query, new Object[]
+    {
+      managerID, user, pass
+    });
   }
+
   //add a record to shift table
   public boolean addShift(int shiftID, String description, String date)
   {
     String query = "INSERT INTO Shift VALUES (?, ?, ?)";
-    return addRecord(query, new Object[]{shiftID, description, date});
+    return addRecord(query, new Object[]
+    {
+      shiftID, description, date
+    });
   }
+
   //add a record to EmployeeManager table
   public boolean addEmployeeManager(int managerID, int employeeID)
   {
     String query = "INSERT INTO EmployeeManager VALUES (?, ?)";
-    return addRecord(query, new Object[]{managerID, employeeID});
+    return addRecord(query, new Object[]
+    {
+      managerID, employeeID
+    });
   }
+
   //add a record to ShiftEmployee table
   public boolean addShiftEmployee(int ShiftID, int EmployeeID)
   {
     String query = "INSERT INTO ShiftEmployee VALUES (?, ?)";
-    return addRecord(query, new Object[]{ShiftID, EmployeeID});
+    return addRecord(query, new Object[]
+    {
+      ShiftID, EmployeeID
+    });
   }
-  
 
   //UPDATE record in table
   //works for all tables, but you must give the query
@@ -178,28 +197,38 @@ public class dbAccess
       return false;
     }
   }
+
   //update employee
-  public boolean updateEmployee(int employeeID, String username, String password) 
+  public boolean updateEmployee(int employeeID, String username, String password)
   {
     String query = "UPDATE EmployeeLogin SET username=?, password=? WHERE employeeID=?";
-    return updateRecord(query, new Object[]{username, password, employeeID});
+    return updateRecord(query, new Object[]
+    {
+      username, password, employeeID
+    });
   }
+
   //update manager
-  public boolean updateManager(int managerID, String username, String password) 
+  public boolean updateManager(int managerID, String username, String password)
   {
     String query = "UPDATE ManagerLogin SET username=?, password=? WHERE managerID=?";
-    return updateRecord(query, new Object[]{username, password, managerID});
+    return updateRecord(query, new Object[]
+    {
+      username, password, managerID
+    });
   }
+
   //update shift
-  public boolean updateShift(int shiftID, String description, String date) 
+  public boolean updateShift(int shiftID, String description, String date)
   {
     String query = "UPDATE Shift SET description=?, date=? WHERE shiftID=?";
-    return updateRecord(query, new Object[]{description, date, shiftID});
+    return updateRecord(query, new Object[]
+    {
+      description, date, shiftID
+    });
   }
 
   //No need for update on EmployeeManager or EmployeeShift, as it is just assigning id's to either. ID's cannot be changed. 
-  
-  
   //REMOVE record from table
   //works for all tables, but you must give the query
   private boolean removeRecord(String deleteQuery, Object[] values)
@@ -224,43 +253,105 @@ public class dbAccess
       return false;
     }
   }
+
   //remove Employee
-  public boolean removeEmployee(int id) 
+  public boolean removeEmployee(int id)
   {
     String query = "DELETE FROM EmployeeLogin WHERE employeeID=?";
-    return removeRecord(query, new Object[]{id});
+    return removeRecord(query, new Object[]
+    {
+      id
+    });
   }
-  
+
   //remove Employee
-  public boolean removeManager(int id) 
+  public boolean removeManager(int id)
   {
     String query = "DELETE FROM ManagerLogin WHERE managerID=?";
-    return removeRecord(query, new Object[]{id});
+    return removeRecord(query, new Object[]
+    {
+      id
+    });
   }
+
   //remove shift
   public boolean removeShift(int id)
   {
-    String query = "DELETE FROM Shift WHERE shiftID=?"; 
-    return removeRecord(query, new Object[]{id});
+    String query = "DELETE FROM Shift WHERE shiftID=?";
+    return removeRecord(query, new Object[]
+    {
+      id
+    });
   }
-  
+
   //remove EmployeeManager
   public boolean removeEmployeeManager(int EmployeeID, int ManagerID)
   {
     String query = "DELETE FROM EmployeeManager WHERE managerID=? AND employeeID=?";
-    return removeRecord(query, new Object[]{EmployeeID, ManagerID});
+    return removeRecord(query, new Object[]
+    {
+      EmployeeID, ManagerID
+    });
   }
+
   //remove EmployeeShift
   public boolean removeEmployeeShift(int EmployeeID, int ShiftID)
   {
     String query = "DELETE FROM EmployeeShift WHERE employeeID=? AND shiftID=?";
-    return removeRecord(query, new Object[]{EmployeeID, ShiftID});
+    return removeRecord(query, new Object[]
+    {
+      EmployeeID, ShiftID
+    });
   }
-  
+
+  public boolean checkEmployeeLogin(String username, String password)
+  {
+    try
+    {
+      String sql = "SELECT * FROM EmployeeLogin WHERE username = ? AND password = ?";
+      PreparedStatement stmt = dbConn.prepareStatement(sql);
+
+      stmt.setString(1, username);
+      stmt.setString(2, password);
+
+      ResultSet rs = stmt.executeQuery();
+
+      return rs.next(); // true if a match is found
+    }
+    catch (Exception e)
+    {
+      System.out.println("Employee login error: " + e.getMessage());
+      return false;
+    }
+  }
+
+  public boolean checkManagerLogin(String username, String password)
+  {
+    try
+    {
+      String sql = "SELECT * FROM ManagerLogin WHERE username = ? AND password = ?";
+      PreparedStatement stmt = dbConn.prepareStatement(sql);
+
+      stmt.setString(1, username);
+      stmt.setString(2, password);
+
+      stmt.setString(2, password);
+
+      ResultSet rs = stmt.executeQuery();
+
+      return rs.next();
+    }
+    catch (Exception e)
+    {
+      System.out.println("Manager login error: " + e.getMessage());
+      return false;
+    }
+  }
+
   //convert arraylist to 2d array
   public Object[][] to2dArray(ArrayList<ArrayList<String>> data)
   {
-    if(data.size() == 0)
+    if (data.size() == 0)
     {
       return new Object[0][0];
     }
@@ -268,9 +359,9 @@ public class dbAccess
     {
       int columnCount = data.get(0).size();
       Object[][] dataList = new Object[data.size()][columnCount];
-      for(int i = 0; i < data.size(); i++)
+      for (int i = 0; i < data.size(); i++)
       {
-        for(int j = 0; j < columnCount; j++)
+        for (int j = 0; j < columnCount; j++)
         {
           dataList[i][j] = data.get(i).get(j);
         }
@@ -296,17 +387,17 @@ public class dbAccess
       //run query
       rs = s.executeQuery(dbQuery);
       //loop through results
-      while(rs.next())
+      while (rs.next())
       {
         ArrayList<String> row = new ArrayList<>();
-        for(int i = 0; i < columnCount; i++)
+        for (int i = 0; i < columnCount; i++)
         {
           row.add(rs.getString(columns[i]));
         }
         this.data.add(row);
       }
     }
-    catch(SQLException e)
+    catch (SQLException e)
     {
       System.out.println("error getting data");
     }
@@ -322,8 +413,8 @@ public class dbAccess
     try
     {
       Class.forName("com.mysql.cj.jdbc.Driver");
-      Connection newConn =
-        DriverManager.getConnection(connectionURL, "root", "mysql1");
+      Connection newConn
+        = DriverManager.getConnection(connectionURL, "root", "mysql1");
       Statement s = newConn.createStatement();
       s.executeUpdate(query);
       newConn.close();
@@ -357,54 +448,68 @@ public class dbAccess
   {
     //Databases name
     dbAccess db = new dbAccess("iaTimely");
-    
+
     //column names for the TestDatabase
     String[] columnNames =
-    {"year", "make", "model"};
-    
+    {
+      "year", "make", "model"
+    };
+
     // ADD
     String insert = "INSERT INTO TestDatabase VALUES (?, ?, ?)";
-    db.addRecord(insert, new Object[]{33, "Project1", "RN"});
-    
+    db.addRecord(insert, new Object[]
+    {
+      33, "Project1", "RN"
+    });
 
     //testing if it works for other classes
     String insert2 = "INSERT INTO EmployeeLogin VALUES (?, ?, ?)";
-    db.addRecord(insert2, new Object[]{1, "Aly","Aj1308"});
+    db.addRecord(insert2, new Object[]
+    {
+      1, "Aly", "Aj1308"
+    });
 
     //Testing if viewTable method works, when the other records are deleted from delete
     String insert3 = "INSERT INTO TestDatabase VALUES (?, ?, ?)";
-    db.addRecord(insert3, new Object[]{34, "Project", "RN"});
-    
+    db.addRecord(insert3, new Object[]
+    {
+      34, "Project", "RN"
+    });
+
     // UPDATE
-    String update =
-      "UPDATE TestDatabase SET make=?, model=? WHERE year=?";
+    String update
+      = "UPDATE TestDatabase SET make=?, model=? WHERE year=?";
     db.updateRecord(update,
-      new Object[]{"UpdatedMake", "UpdatedModel", 33});
+      new Object[]
+      {
+        "UpdatedMake", "UpdatedModel", 33
+      });
 
     // DELETE
-    String delete =
-      "DELETE FROM TestDatabase WHERE year=?";
-    db.removeRecord(delete, new Object[]{33});
-    
-    
+    String delete
+      = "DELETE FROM TestDatabase WHERE year=?";
+    db.removeRecord(delete, new Object[]
+    {
+      33
+    });
+
     //testing all the specific table methods
     db.addEmployeeAcc(0, "poop", "123me");
     db.addManagerAcc(3, "frlks", "fkjr");
     db.addShift(4, "workworkwork", "2026-11-11");
     db.addEmployeeManager(3, 0);
     db.addShiftEmployee(4, 0);
-    
+
     db.updateEmployee(0, "fart", "123you");
     db.updateManager(3, "frank", "Iheartcode");
     db.updateShift(4, "workaboutsmth", "2026-11-12");
 
-    
     db.removeEmployee(0);
     db.removeManager(3);
     db.removeShift(4);
     db.removeEmployeeManager(0, 3);
     db.removeEmployeeShift(0, 4);
-    
+
     // VIEW TABLE
     System.out.println(db.getTable("TestDatabase", columnNames));
   }
