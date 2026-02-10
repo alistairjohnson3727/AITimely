@@ -66,14 +66,35 @@ public class loginGUI extends JFrame implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
         String command = e.getActionCommand();
+        String username = userField.getText().trim();
+        String password = passField.getText().trim();
+
+        dbAccess db = new dbAccess("iaTimely");
 
         if (command.equals("Employee"))
         {
-            // new InsertDisplay(this);
+            boolean valid = db.checkEmployeeLogin(username, password);
+
+            if (valid)
+            {
+                new EmployeeGUI();
+                this.dispose();
+            }
+            else
+            {
+                popupMessageGUI.show(this, "Invalid employee login");
+            }
         }
         else if (command.equals("Manager"))
         {
-            // new DatabaseDelete(this);
+            boolean valid = db.checkManagerLogin(username, password);
+
+            if (!valid)
+            {
+                popupMessageGUI.show(this, "Invalid manager login");
+            }
         }
+
+        db.closeDbConn();
     }
 }

@@ -8,7 +8,14 @@ package iatimely;
  *
  * @author alyj3
  */
+import javax.swing.JOptionPane;
+import java.awt.Component;
+
 public class popupMessageGUI
 {
-  
+  // Simple reusable popup
+  public static void show(Component parent, String message)
+  {
+    JOptionPane.showMessageDialog(parent, message);
+  }
 }
