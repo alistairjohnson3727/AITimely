@@ -39,7 +39,7 @@ public class ManagerGUI extends JFrame implements ActionListener
         buttonPanel.add(removeShift);
         buttonPanel.add(updateShift);
         this.add(title, BorderLayout.CENTER);
-        
+        this.add(buttonPanel, BorderLayout.SOUTH);
         this.setVisible(true);
     }
 
