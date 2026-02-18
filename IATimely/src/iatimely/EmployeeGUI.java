@@ -7,18 +7,33 @@ package iatimely;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
 
-public class EmployeeGUI extends JFrame
+public class EmployeeGUI extends JFrame implements ActionListener
 {
+  private JLabel title;
+  private JButton viewShift;
     public EmployeeGUI()
     {
         super("Employee Dashboard");
         this.setBounds(150, 150, 400, 300);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        JLabel label = new JLabel("Welcome Employee!", JLabel.CENTER);
-        this.add(label, BorderLayout.CENTER);
+        title = new JLabel("Welcome Employee!", JLabel.CENTER);
+        viewShift = new JButton("View Shift");
+        viewShift.addActionListener(this);
+        
+        this.add(title, BorderLayout.CENTER);
+        this.add(viewShift,BorderLayout.SOUTH);
 
         this.setVisible(true);
     }
+
+  @Override
+  public void actionPerformed(ActionEvent e)
+  {
+    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+  }
 }
