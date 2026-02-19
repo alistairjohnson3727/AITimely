@@ -32,7 +32,7 @@ public class RemoveShiftGUI extends JFrame implements ActionListener
 
     super("Add Shift");
     this.setBounds(300, 300, 500, 400);
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
     title = new JLabel("Remove Shift");
     shiftLabel = new JLabel("Shift ID: ");

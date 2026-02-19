@@ -27,7 +27,7 @@ public class ChoiceSignupGUI extends JFrame implements ActionListener
   {
     super("Choose");
     this.setBounds(100,100,200,100);
-    this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     signupEmpButton = new JButton("Employee");
     signupEmpButton.addActionListener(this);
     signupManButton = new JButton("Manager");

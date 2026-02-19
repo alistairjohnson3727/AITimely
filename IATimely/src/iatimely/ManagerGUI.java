@@ -24,7 +24,7 @@ public class ManagerGUI extends JFrame implements ActionListener
     {
         super("Manager Dashboard");
         this.setBounds(150, 150, 400, 300);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         title = new JLabel("Welcome Manager!", JLabel.CENTER);
         addShift = new JButton("Add Shift");

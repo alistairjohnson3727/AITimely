@@ -29,7 +29,7 @@ public class loginGUI extends JFrame implements ActionListener
   {
     super("Login");
     this.setBounds(100, 100, 400, 500);
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     this.setLayout(new BorderLayout());
 
     title = new JLabel("Login Page", JLabel.CENTER);
