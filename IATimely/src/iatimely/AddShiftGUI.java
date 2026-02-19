@@ -84,6 +84,10 @@ public class AddShiftGUI extends JFrame implements ActionListener
       {
         JOptionPane.showMessageDialog(this, "Shift Added!");
       }
+      else
+      {
+        JOptionPane.showMessageDialog(this, "Error Adding Shift."); 
+      }
         
     }
   }
