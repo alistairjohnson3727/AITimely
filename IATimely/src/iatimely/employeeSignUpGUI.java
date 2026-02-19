@@ -7,6 +7,8 @@ package iatimely;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -30,6 +32,7 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
   private JButton signUpButton;
   private JLabel idLabel;
   private JTextField idField;
+  private dbAccess db;
 
   public employeeSignUpGUI()
   {
@@ -94,5 +97,40 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
         JOptionPane.showMessageDialog(this, "Invalid Employee ID");
       }
     }
+  }
+  private Integer generateUniqueEmployeeID()
+  {
+    int newID;
+    boolean exists;
+
+    do
+    {
+      newID = (int)(Math.random() * 9000) + 1000;
+      exists = false;
+
+      try
+      {
+        String sql = "SELECT EmployeeLogin FROM employeeID WHERE employeeID = ?";
+        PreparedStatement ps = db.getDbConn().prepareStatement(sql);
+        ps.setInt(1, newID);
+
+        ResultSet rs = ps.executeQuery();
+
+        if(rs.next())
+        {
+          exists = true; // ID already exists
+        }
+
+        rs.close();
+        ps.close();
+      }
+      catch(Exception e)
+      {
+        System.out.println("Error checking employeeID uniqueness");
+      }
+
+    } while(exists);
+
+    return newID;
   }
 }
