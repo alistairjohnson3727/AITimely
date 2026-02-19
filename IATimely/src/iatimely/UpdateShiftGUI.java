@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -24,15 +25,15 @@ public class UpdateShiftGUI extends JFrame implements ActionListener
   //private JTextField oldDateField;
   private JLabel newDateLabel;
   private JTextField newDateField;
-  private JLabel EmployeeLabel;
-  private JTextField employeeIDField;
+  private JLabel shiftLabel;
+  private JTextField shiftIDField;
   private JButton updateButton;
   private JPanel middlePanel;
   public UpdateShiftGUI()
   {
 
     super("Update Shift");
-    this.setBounds(300, 300, 400, 400);
+    this.setBounds(300, 300, 300, 300);
     this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     
     title = new JLabel("Update Shift");
@@ -42,9 +43,9 @@ public class UpdateShiftGUI extends JFrame implements ActionListener
     //oldDateField = new JTextField(10);
     newDateLabel = new JLabel("New Date(YYYY-MM-DD): ");
     newDateField = new JTextField(10);
-    EmployeeLabel = new JLabel("Shift ID: ");
-    employeeIDField = new JTextField(20);
-    updateButton = new JButton("Add Shift");
+    shiftLabel = new JLabel("Shift ID: ");
+    shiftIDField = new JTextField(20);
+    updateButton = new JButton("Update Shift");
     updateButton.addActionListener(this);
     middlePanel = new JPanel();
     
@@ -54,8 +55,8 @@ public class UpdateShiftGUI extends JFrame implements ActionListener
     //middlePanel.add(oldDateField);
     middlePanel.add(newDateLabel);
     middlePanel.add(newDateField);
-    middlePanel.add(EmployeeLabel);
-    middlePanel.add(employeeIDField);
+    middlePanel.add(shiftLabel);
+    middlePanel.add(shiftIDField);
     
     this.add(title, BorderLayout.NORTH);
     this.add(middlePanel,BorderLayout.CENTER);
@@ -63,10 +64,27 @@ public class UpdateShiftGUI extends JFrame implements ActionListener
     this.setVisible(true);
   }
 
-  @Override
+@Override
   public void actionPerformed(ActionEvent e)
   {
-    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    String command = e.getActionCommand();
+    if(command.equals("Update Shift"))
+    {
+      int shiftID = Integer.parseInt(shiftIDField.getText());
+      String description = newDescriptionField.getText().trim();
+      String date = newDateField.getText().trim();
+      dbAccess db = new dbAccess("iaTimely");
+      boolean update = db.updateShift(shiftID, description, date);
+      db.closeDbConn();
+      if(update)
+      {
+        JOptionPane.showMessageDialog(this, "Shift updated!");
+      }
+      else
+      {
+        JOptionPane.showMessageDialog(this, "Error Updating"); 
+      }
+    }
   }
 
 }

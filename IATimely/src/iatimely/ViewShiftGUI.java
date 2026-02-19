@@ -27,7 +27,7 @@ public class ViewShiftGUI extends JFrame implements ActionListener
   {
 
     super("View Shift");
-    this.setBounds(300, 300,400, 4100);
+    this.setBounds(300, 300,300, 300);
     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     
     title = new JLabel("View Shift");

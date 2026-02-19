@@ -39,7 +39,7 @@ public class AddShiftGUI extends JFrame implements ActionListener
   public AddShiftGUI()
   {
     super("Add Shift");
-    this.setBounds(300, 300, 200, 100);
+    this.setBounds(300, 300, 400, 400);
     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
     title = new JLabel("Add Shift");
