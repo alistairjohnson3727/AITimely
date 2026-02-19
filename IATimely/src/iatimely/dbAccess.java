@@ -172,6 +172,27 @@ public class dbAccess
       ShiftID, EmployeeID
     });
   }
+  
+  public void clearAllData()
+{
+    try
+    {
+        Statement s = this.dbConn.createStatement();
+
+        s.executeUpdate("DELETE FROM ShiftEmployee");
+        s.executeUpdate("DELETE FROM EmployeeManager");
+        s.executeUpdate("DELETE FROM Shift");
+        s.executeUpdate("DELETE FROM EmployeeLogin");
+        s.executeUpdate("DELETE FROM ManagerLogin");
+
+        System.out.println("All table data deleted.");
+    }
+    catch (SQLException e)
+    {
+        System.out.println("Error deleting data.");
+    }
+}
+
 
   //UPDATE record in table
   //works for all tables, but you must give the query
@@ -509,6 +530,8 @@ public class dbAccess
     db.removeShift(4);
     db.removeEmployeeManager(0, 3);
     db.removeEmployeeShift(0, 4);
+    
+    db.clearAllData();
 
     // VIEW TABLE
     System.out.println(db.getTable("TestDatabase", columnNames));
