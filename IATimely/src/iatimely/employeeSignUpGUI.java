@@ -47,7 +47,7 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
     passLabel = new JLabel("Password: ");
     passField = new JTextField(20);
     passField.addActionListener(this);
-    idLabel = new JLabel("Id:");
+    idLabel = new JLabel("manager Id:");
     idField = new JTextField(20);
     idField.addActionListener(this);
     signUpButton = new JButton("Sign up");

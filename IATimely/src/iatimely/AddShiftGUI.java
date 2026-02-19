@@ -83,7 +83,7 @@ public class AddShiftGUI extends JFrame implements ActionListener
       db.closeDbConn();
       if(success1 && success2)
       {
-        JOptionPane.showMessageDialog(this, "Shift Added!");
+        JOptionPane.showMessageDialog(this, "Shift Added! shift id is " + shiftID);
       }
       else
       {

@@ -18,6 +18,7 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
  */
 public class RemoveShiftGUI extends JFrame implements ActionListener
 {
+
   private JLabel title;
   private JLabel employeeLabel;
   private JTextField employeeIDField;
@@ -25,13 +26,14 @@ public class RemoveShiftGUI extends JFrame implements ActionListener
   private JTextField shiftIDField;
   private JButton removeButton;
   private JPanel middlePanel;
+
   public RemoveShiftGUI()
   {
 
     super("Add Shift");
     this.setBounds(300, 300, 200, 100);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    
+
     title = new JLabel("Remove Shift");
     shiftLabel = new JLabel("Shift ID: ");
     shiftIDField = new JTextField(20);
@@ -40,16 +42,15 @@ public class RemoveShiftGUI extends JFrame implements ActionListener
     removeButton = new JButton("Remove Shift");
     removeButton.addActionListener(this);
     middlePanel = new JPanel();
-    
 
     middlePanel.add(employeeLabel);
     middlePanel.add(employeeIDField);
     middlePanel.add(shiftLabel);
     middlePanel.add(shiftIDField);
-    
+
     this.add(title, BorderLayout.NORTH);
-    this.add(middlePanel,BorderLayout.CENTER);
-    this.add(removeButton,BorderLayout.SOUTH);
+    this.add(middlePanel, BorderLayout.CENTER);
+    this.add(removeButton, BorderLayout.SOUTH);
     this.setVisible(true);
   }
 
@@ -57,22 +58,23 @@ public class RemoveShiftGUI extends JFrame implements ActionListener
   public void actionPerformed(ActionEvent e)
   {
     String command = e.getActionCommand();
-    if(command.equals("Remove Shift"))
+    if (command.equals("Remove Shift"))
     {
       int shiftID = Integer.parseInt(shiftIDField.getText());
       int employeeID = Integer.parseInt(employeeIDField.getText());
 
       dbAccess db = new dbAccess("iaTimely");
-      boolean success1 = db.removeShift(shiftID);
       boolean success2 = db.removeEmployeeShift(employeeID, shiftID);
+      boolean success1 = db.removeShift(shiftID);
+
       db.closeDbConn();
-      if(success1 && success2)
+      if (success1 && success2)
       {
-        JOptionPane.showMessageDialog(this, "Shift Removed!"); 
+        JOptionPane.showMessageDialog(this, "Shift Removed!");
       }
       else
       {
-        JOptionPane.showMessageDialog(this, "Error removing"); 
+        JOptionPane.showMessageDialog(this, "Error removing");
       }
     }
   }
