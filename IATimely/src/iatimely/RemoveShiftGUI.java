@@ -49,6 +49,7 @@ public class RemoveShiftGUI extends JFrame implements ActionListener
     this.add(title, BorderLayout.NORTH);
     this.add(middlePanel,BorderLayout.CENTER);
     this.add(removeButton,BorderLayout.SOUTH);
+    this.setVisible(true);
   }
 
   @Override

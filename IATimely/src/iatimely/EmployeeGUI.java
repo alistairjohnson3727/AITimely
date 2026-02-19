@@ -32,8 +32,12 @@ public class EmployeeGUI extends JFrame implements ActionListener
     }
 
   @Override
-  public void actionPerformed(ActionEvent e)
+  public void actionPerformed(ActionEvent err)
   {
-    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    String command = err.getActionCommand();
+    if(command.equals("View Shift"));
+    {
+      new ViewShiftGUI();
+    }
   }
 }

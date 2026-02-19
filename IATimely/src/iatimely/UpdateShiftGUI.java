@@ -60,6 +60,7 @@ public class UpdateShiftGUI extends JFrame implements ActionListener
     this.add(title, BorderLayout.NORTH);
     this.add(middlePanel,BorderLayout.CENTER);
     this.add(updateButton,BorderLayout.SOUTH);
+    this.setVisible(true);
   }
 
   @Override

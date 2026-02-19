@@ -51,5 +51,13 @@ public class ManagerGUI extends JFrame implements ActionListener
     {
       new AddShiftGUI();
     } 
+    else if(command.equals("Remove Shift"))
+    {
+      new RemoveShiftGUI();
+    } 
+    else if(command.equals("Update Shift"))
+    {
+      new UpdateShiftGUI();
+    }
   }
 }

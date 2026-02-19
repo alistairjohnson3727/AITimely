@@ -61,6 +61,7 @@ public class AddShiftGUI extends JFrame implements ActionListener
     this.add(title, BorderLayout.NORTH);
     this.add(middlePanel,BorderLayout.CENTER);
     this.add(addButton,BorderLayout.SOUTH);
+    this.setVisible(true);
   }
 
   @Override

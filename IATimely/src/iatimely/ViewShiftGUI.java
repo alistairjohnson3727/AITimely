@@ -44,6 +44,7 @@ public class ViewShiftGUI extends JFrame implements ActionListener
     this.add(title, BorderLayout.NORTH);
     this.add(middlePanel,BorderLayout.CENTER);
     this.add(viewButton,BorderLayout.SOUTH);
+    this.setVisible(true);
   }
 
   @Override
