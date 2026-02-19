@@ -80,6 +80,7 @@ public class AddShiftGUI extends JFrame implements ActionListener
       dbAccess db = new dbAccess("iaTimely");
       boolean success1 = db.addShift(shiftID, description, date);
       boolean success2 = db.addShiftEmployee(shiftID, employeeID);
+      db.closeDbConn();
       if(success1 && success2)
       {
         JOptionPane.showMessageDialog(this, "Shift Added!");
