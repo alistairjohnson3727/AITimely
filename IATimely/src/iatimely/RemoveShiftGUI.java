@@ -20,8 +20,8 @@ public class RemoveShiftGUI extends JFrame implements ActionListener
 {
 
   private JLabel title;
-  private JLabel employeeLabel;
-  private JTextField employeeIDField;
+  //private JLabel employeeLabel;
+  //private JTextField employeeIDField;
   private JLabel shiftLabel;
   private JTextField shiftIDField;
   private JButton removeButton;
@@ -31,20 +31,20 @@ public class RemoveShiftGUI extends JFrame implements ActionListener
   {
 
     super("Add Shift");
-    this.setBounds(300, 300, 200, 100);
+    this.setBounds(300, 300, 500, 400);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     title = new JLabel("Remove Shift");
     shiftLabel = new JLabel("Shift ID: ");
     shiftIDField = new JTextField(20);
-    employeeLabel = new JLabel("Employee ID");
-    employeeIDField = new JTextField(20);
+    //employeeLabel = new JLabel("Employee ID");
+    //employeeIDField = new JTextField(20);
     removeButton = new JButton("Remove Shift");
     removeButton.addActionListener(this);
     middlePanel = new JPanel();
 
-    middlePanel.add(employeeLabel);
-    middlePanel.add(employeeIDField);
+    //middlePanel.add(employeeLabel);
+    //middlePanel.add(employeeIDField);
     middlePanel.add(shiftLabel);
     middlePanel.add(shiftIDField);
 
@@ -61,10 +61,10 @@ public class RemoveShiftGUI extends JFrame implements ActionListener
     if (command.equals("Remove Shift"))
     {
       int shiftID = Integer.parseInt(shiftIDField.getText());
-      int employeeID = Integer.parseInt(employeeIDField.getText());
+      //int employeeID = Integer.parseInt(employeeIDField.getText());
 
       dbAccess db = new dbAccess("iaTimely");
-      boolean success2 = db.removeEmployeeShift(employeeID, shiftID);
+      boolean success2 = db.removeEmployeeShift(shiftID);
       boolean success1 = db.removeShift(shiftID);
 
       db.closeDbConn();
@@ -72,6 +72,7 @@ public class RemoveShiftGUI extends JFrame implements ActionListener
       {
         JOptionPane.showMessageDialog(this, "Shift Removed!");
       }
+      
       else
       {
         JOptionPane.showMessageDialog(this, "Error removing");

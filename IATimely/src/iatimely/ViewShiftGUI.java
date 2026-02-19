@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -29,10 +30,10 @@ public class ViewShiftGUI extends JFrame implements ActionListener
     this.setBounds(300, 300, 200, 100);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     
-    title = new JLabel("Add Shift");
+    title = new JLabel("View Shift");
     dateLabel = new JLabel("Date(YYYY-MM-DD): ");
     dateField = new JTextField(10);
-    viewButton = new JButton("Add Shift");
+    viewButton = new JButton("View Shift");
     viewButton.addActionListener(this);
     middlePanel = new JPanel();
     
@@ -47,10 +48,24 @@ public class ViewShiftGUI extends JFrame implements ActionListener
     this.setVisible(true);
   }
 
-  @Override
+@Override
   public void actionPerformed(ActionEvent e)
   {
-    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    String command = e.getActionCommand();
+    if(command.equals("View Shift"))
+    {
+      String date = dateField.getText().trim();
+      dbAccess db = new dbAccess("iaTimely");
+      String description = db.viewShift(date);
+      if(description != null)
+      {
+        JOptionPane.showMessageDialog(this, description);
+      }
+      else
+      {
+        JOptionPane.showMessageDialog(this, "Error viewing or does not exist");
+      }
+    }
   }
 
 }

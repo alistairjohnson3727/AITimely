@@ -172,27 +172,26 @@ public class dbAccess
       ShiftID, EmployeeID
     });
   }
-  
+
   public void clearAllData()
-{
+  {
     try
     {
-        Statement s = this.dbConn.createStatement();
+      Statement s = this.dbConn.createStatement();
 
-        s.executeUpdate("DELETE FROM ShiftEmployee");
-        s.executeUpdate("DELETE FROM EmployeeManager");
-        s.executeUpdate("DELETE FROM Shift");
-        s.executeUpdate("DELETE FROM EmployeeLogin");
-        s.executeUpdate("DELETE FROM ManagerLogin");
+      s.executeUpdate("DELETE FROM ShiftEmployee");
+      s.executeUpdate("DELETE FROM EmployeeManager");
+      s.executeUpdate("DELETE FROM Shift");
+      s.executeUpdate("DELETE FROM EmployeeLogin");
+      s.executeUpdate("DELETE FROM ManagerLogin");
 
-        System.out.println("All table data deleted.");
+      System.out.println("All table data deleted.");
     }
     catch (SQLException e)
     {
-        System.out.println("Error deleting data.");
+      System.out.println("Error deleting data.");
     }
-}
-
+  }
 
   //UPDATE record in table
   //works for all tables, but you must give the query
@@ -316,13 +315,41 @@ public class dbAccess
   }
 
   //remove EmployeeShift
-  public boolean removeEmployeeShift(int EmployeeID, int ShiftID)
+  public boolean removeEmployeeShift(int ShiftID)
   {
-    String query = "DELETE FROM EmployeeShift WHERE employeeID=? AND shiftID=?";
+    String query = "DELETE FROM ShiftEmployee WHERE shiftID=?";
     return removeRecord(query, new Object[]
     {
-      EmployeeID, ShiftID
+      ShiftID
     });
+  }
+
+  public String viewShift(String date)
+  {
+    String description = null;
+
+    try
+    {
+      String sql = "SELECT description FROM Shift WHERE date = ?";
+      PreparedStatement ps = this.dbConn.prepareStatement(sql);
+      ps.setString(1, date);
+
+      ResultSet rs = ps.executeQuery();
+
+      if (rs.next())
+      {
+        description = rs.getString("description");
+      }
+
+      rs.close();
+      ps.close();
+    }
+    catch (SQLException e)
+    {
+      System.out.println("Error viewing shift by date.");
+    }
+
+    return description;
   }
 
   public boolean checkEmployeeLogin(String username, String password)
@@ -529,8 +556,8 @@ public class dbAccess
     db.removeManager(3);
     db.removeShift(4);
     db.removeEmployeeManager(0, 3);
-    db.removeEmployeeShift(0, 4);
-    
+    //db.removeEmployeeShift(0, 4);
+
     db.clearAllData();
 
     // VIEW TABLE
