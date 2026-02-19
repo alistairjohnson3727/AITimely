@@ -19,7 +19,7 @@ public class EmployeeGUI extends JFrame implements ActionListener
     {
         super("Employee Dashboard");
         this.setBounds(150, 150, 400, 300);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         title = new JLabel("Welcome Employee!", JLabel.CENTER);
         viewShift = new JButton("View Shift");

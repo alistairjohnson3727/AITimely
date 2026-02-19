@@ -27,7 +27,7 @@ public class ViewShiftGUI extends JFrame implements ActionListener
 
     super("View Shift");
     this.setBounds(300, 300, 200, 100);
-    this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     
     title = new JLabel("Add Shift");
     dateLabel = new JLabel("Date(YYYY-MM-DD): ");

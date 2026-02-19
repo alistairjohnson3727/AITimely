@@ -34,7 +34,7 @@ public class StartGUI extends JFrame implements ActionListener
   {
     super("Start page");
     this.setBounds(100,100,800,500);
-    this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     String description = "";
     TitleLabel = new JLabel("Welcome to AITimely");
     paragraphLabel = new JLabel(description);

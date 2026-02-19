@@ -35,7 +35,7 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
   {
     super("employee sign up");
     this.setBounds(100, 100, 400, 400);
-    this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     titleLabel = new JLabel("Sign Up");
     userLabel = new JLabel("Username: ");
