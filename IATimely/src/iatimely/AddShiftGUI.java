@@ -4,15 +4,16 @@
  */
 package iatimely;
 
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -23,6 +24,7 @@ import javax.swing.JTextField;
  */
 public class AddShiftGUI extends JFrame implements ActionListener
 {
+
   private JLabel title;
   private JLabel descriptionLabel;
   private JTextArea descriptionField;
@@ -33,13 +35,13 @@ public class AddShiftGUI extends JFrame implements ActionListener
   private JButton addButton;
   private JPanel middlePanel;
   private dbAccess db;
+
   public AddShiftGUI()
   {
-
     super("Add Shift");
     this.setBounds(300, 300, 200, 100);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    
+
     title = new JLabel("Add Shift");
     descriptionLabel = new JLabel("Description: ");
     descriptionField = new JTextArea();
@@ -50,27 +52,42 @@ public class AddShiftGUI extends JFrame implements ActionListener
     addButton = new JButton("Add Shift");
     addButton.addActionListener(this);
     middlePanel = new JPanel();
-    
+
     middlePanel.add(descriptionLabel);
     middlePanel.add(descriptionField);
     middlePanel.add(dateLabel);
     middlePanel.add(dateField);
     middlePanel.add(EmployeeLabel);
     middlePanel.add(employeeIDField);
-    
+
     this.add(title, BorderLayout.NORTH);
-    this.add(middlePanel,BorderLayout.CENTER);
-    this.add(addButton,BorderLayout.SOUTH);
+    this.add(middlePanel, BorderLayout.CENTER);
+    this.add(addButton, BorderLayout.SOUTH);
     this.setVisible(true);
   }
 
   @Override
   public void actionPerformed(ActionEvent e)
   {
-    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    String command = e.getActionCommand();
+    if (command.equals("Add Shift"))
+    {
+      int shiftID = generateUniqueShiftID();
+      int employeeID = Integer.parseInt(employeeIDField.getText());
+      String description = descriptionField.getText().trim();
+      String date = dateField.getText().trim();
+
+      dbAccess db = new dbAccess("iaTimely");
+      boolean success1 = db.addShift(shiftID, description, date);
+      boolean success2 = db.addShiftEmployee(shiftID, employeeID);
+      if(success1 && success2)
+      {
+        JOptionPane.showMessageDialog(this, "Shift Added!");
+      }
+        
+    }
   }
-  
-  
+
   private Integer generateUniqueShiftID()
   {
     int newID;
@@ -78,7 +95,7 @@ public class AddShiftGUI extends JFrame implements ActionListener
 
     do
     {
-      newID = (int)(Math.random() * 9000) + 1000;
+      newID = (int) (Math.random() * 9000) + 1000;
       exists = false;
 
       try
@@ -89,7 +106,7 @@ public class AddShiftGUI extends JFrame implements ActionListener
 
         ResultSet rs = ps.executeQuery();
 
-        if(rs.next())
+        if (rs.next())
         {
           exists = true; // ID already exists
         }
@@ -97,12 +114,12 @@ public class AddShiftGUI extends JFrame implements ActionListener
         rs.close();
         ps.close();
       }
-      catch(Exception e)
+      catch (Exception e)
       {
         System.out.println("Error checking shiftID uniqueness");
       }
 
-    } while(exists);
+    } while (exists);
 
     return newID;
   }

@@ -75,17 +75,19 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
     {
       try
       {
-        int employeeID = Integer.parseInt(idField.getText().trim());
+        int managerID = Integer.parseInt(idField.getText().trim());
+        int employeeID = generateUniqueEmployeeID();
         String username = userField.getText().trim();
         String password = passField.getText().trim();
 
         dbAccess db = new dbAccess("iaTimely");
         boolean success = db.addEmployeeAcc(employeeID, username, password);
+        boolean success2 = db.addEmployeeManager(managerID, employeeID);
         db.closeDbConn();
 
-        if (success)
+        if (success && success2)
         {
-          JOptionPane.showMessageDialog(this, "Employee account created!");
+          JOptionPane.showMessageDialog(this, "Employee account created! your id is " + employeeID);
         }
         else
         {
