@@ -4,11 +4,14 @@
  */
 package iatimely;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
@@ -17,15 +20,15 @@ import javax.swing.JTextField;
  */
 public class AddShiftGUI extends JFrame implements ActionListener
 {
-
+  private JLabel title;
   private JLabel descriptionLabel;
-  private JTextField descriptionField;
-  private JLabel dataLabel;
+  private JTextArea descriptionField;
+  private JLabel dateLabel;
   private JTextField dateField;
   private JLabel EmployeeLabel;
   private JTextField employeeIDField;
   private JButton addButton;
-
+  private JPanel middlePanel;
   public AddShiftGUI()
   {
 
@@ -33,7 +36,27 @@ public class AddShiftGUI extends JFrame implements ActionListener
     this.setBounds(300, 300, 200, 100);
     this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     
+    title = new JLabel("Add Shift");
+    descriptionLabel = new JLabel("Description: ");
+    descriptionField = new JTextArea();
+    dateLabel = new JLabel("Date(YYYY-MM-DD): ");
+    dateField = new JTextField(10);
+    EmployeeLabel = new JLabel("Employee ID: ");
+    employeeIDField = new JTextField(20);
+    addButton = new JButton("Add Shift");
+    addButton.addActionListener(this);
+    middlePanel = new JPanel();
     
+    middlePanel.add(descriptionLabel);
+    middlePanel.add(descriptionField);
+    middlePanel.add(dateLabel);
+    middlePanel.add(dateField);
+    middlePanel.add(EmployeeLabel);
+    middlePanel.add(employeeIDField);
+    
+    this.add(title, BorderLayout.NORTH);
+    this.add(middlePanel,BorderLayout.CENTER);
+    this.add(addButton,BorderLayout.SOUTH);
   }
 
   @Override

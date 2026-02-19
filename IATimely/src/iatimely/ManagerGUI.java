@@ -44,8 +44,12 @@ public class ManagerGUI extends JFrame implements ActionListener
     }
 
   @Override
-  public void actionPerformed(ActionEvent e)
+  public void actionPerformed(ActionEvent err)
   {
-    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    String command = err.getActionCommand();
+    if(command.equals("Add Shift"))
+    {
+      new AddShiftGUI();
+    } 
   }
 }
