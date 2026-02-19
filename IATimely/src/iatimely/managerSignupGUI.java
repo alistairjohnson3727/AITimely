@@ -7,6 +7,8 @@ package iatimely;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,8 +31,7 @@ public class managerSignupGUI extends JFrame implements ActionListener
   private JTextField passField;
   private JPanel centerPanel;
   private JButton signUpButton;
-  private JLabel idLabel;
-  private JTextField idField;
+  private dbAccess db;
 
   public managerSignupGUI()
   {
@@ -45,9 +46,6 @@ public class managerSignupGUI extends JFrame implements ActionListener
     passLabel = new JLabel("Password: ");
     passField = new JTextField(20);
     passField.addActionListener(this);
-    idLabel = new JLabel("ID: ");
-    idField = new JTextField(20);
-    idField.addActionListener(this);
     signUpButton = new JButton("Sign up");
     signUpButton.addActionListener(this);
 
@@ -56,8 +54,7 @@ public class managerSignupGUI extends JFrame implements ActionListener
     centerPanel.add(userField);
     centerPanel.add(passLabel);
     centerPanel.add(passField);
-    centerPanel.add(idLabel);
-    centerPanel.add(idField);
+
 
     this.add(titleLabel, BorderLayout.NORTH);
     this.add(centerPanel, BorderLayout.CENTER);
@@ -75,7 +72,7 @@ public class managerSignupGUI extends JFrame implements ActionListener
       {
         try
         {
-          int managerID = Integer.parseInt(idField.getText().trim());
+          int managerID = generateUniqueManagerID();
           String username = userField.getText().trim();
           String password = passField.getText().trim();
 
@@ -85,7 +82,7 @@ public class managerSignupGUI extends JFrame implements ActionListener
 
           if (success)
           {
-            JOptionPane.showMessageDialog(this, "Manager account created!");
+            JOptionPane.showMessageDialog(this, "Manager account created! your id is " + managerID);
           }
           else
           {
@@ -98,5 +95,41 @@ public class managerSignupGUI extends JFrame implements ActionListener
         }
       }
     }
+  }
+  
+  private Integer generateUniqueManagerID()
+  {
+    int newID;
+    boolean exists;
+
+    do
+    {
+      newID = (int)(Math.random() * 9000) + 1000;
+      exists = false;
+
+      try
+      {
+        String sql = "SELECT ManagerLogin FROM managerID WHERE managerID = ?";
+        PreparedStatement ps = db.getDbConn().prepareStatement(sql);
+        ps.setInt(1, newID);
+
+        ResultSet rs = ps.executeQuery();
+
+        if(rs.next())
+        {
+          exists = true; // ID already exists
+        }
+
+        rs.close();
+        ps.close();
+      }
+      catch(Exception e)
+      {
+        System.out.println("Error checking managerID uniqueness");
+      }
+
+    } while(exists);
+
+    return newID;
   }
 }

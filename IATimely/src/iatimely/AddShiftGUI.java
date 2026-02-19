@@ -71,7 +71,7 @@ public class AddShiftGUI extends JFrame implements ActionListener
   }
   
   
-    private Integer generateUniqueShiftID()
+  private Integer generateUniqueShiftID()
   {
     int newID;
     boolean exists;
