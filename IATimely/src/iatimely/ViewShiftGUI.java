@@ -59,7 +59,7 @@ public class ViewShiftGUI extends JFrame implements ActionListener
       String description = db.viewShift(date);
       if(description != null)
       {
-        JOptionPane.showMessageDialog(this, description);
+        JOptionPane.showMessageDialog(this, "Description: " + description);
       }
       else
       {
