@@ -9,23 +9,28 @@ import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import javax.swing.JButton;
 
 public class EmployeeGUI extends JFrame implements ActionListener
 {
   private JLabel title;
+  private JLabel date;
   private JButton viewShift;
     public EmployeeGUI()
     {
         super("Employee Dashboard");
         this.setBounds(150, 150, 400, 300);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
+        LocalDate currentDate = LocalDate.now();
+        
         title = new JLabel("Welcome Employee!", JLabel.CENTER);
+        date = new JLabel("Current Date: " + currentDate, JLabel.CENTER);
         viewShift = new JButton("View Shift");
         viewShift.addActionListener(this);
         
-        this.add(title, BorderLayout.CENTER);
+        this.add(title, BorderLayout.NORTH);
+        this.add(date,BorderLayout.CENTER);
         this.add(viewShift,BorderLayout.SOUTH);
 
         this.setVisible(true);
