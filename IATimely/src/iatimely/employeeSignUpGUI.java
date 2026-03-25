@@ -133,10 +133,31 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
     }
     return newID;
   }
-  /*
-  private boolean CheckEmpUsername(String name)
+  
+  private Integer CheckEmpUsername(String name)
   {
-    
+    int exists = 0;
+    try
+    {
+      String sql = "SELECT EmployeeLogin FROM username WHERE username = ?";
+      PreparedStatement ps = db.getDbConn().prepareStatement(sql);
+      ps.setString(1, name);
+      
+      ResultSet rs = ps.executeQuery();
+      if(rs.next())
+      {
+        exists = 1;
+      }
+      else
+      {
+        exists = 2;
+      }
+    }
+    catch (Exception e)
+    {
+      System.out.println("Error checking employee username uniqueness");
+      exists = 0;
+    }
+    return exists;
   }
-  */
 }

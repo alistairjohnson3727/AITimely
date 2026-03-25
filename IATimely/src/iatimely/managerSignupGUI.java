@@ -132,4 +132,31 @@ public class managerSignupGUI extends JFrame implements ActionListener
 
     return newID;
   }
+  
+  private Integer CheckManUsername(String name)
+  {
+    int exists = 0;
+    try
+    {
+      String sql = "SELECT ManagerLogin FROM username WHERE username = ?";
+      PreparedStatement ps = db.getDbConn().prepareStatement(sql);
+      ps.setString(1, name);
+      
+      ResultSet rs = ps.executeQuery();
+      if(rs.next())
+      {
+        exists = 1;
+      }
+      else
+      {
+        exists = 2;
+      }
+    }
+    catch (Exception e)
+    {
+      System.out.println("Error checking manager username uniqueness");
+      exists = 0;
+    }
+    return exists;
+  }
 }
