@@ -100,14 +100,14 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
       }
     }
   }
+
   private Integer generateUniqueEmployeeID()
   {
-    int newID;
-    boolean exists;
-
-    do
+    int newID = (int) (Math.random() * 9000) + 1000;
+    boolean exists = true;
+    while (exists)
     {
-      newID = (int)(Math.random() * 9000) + 1000;
+      newID = (int) (Math.random() * 9000) + 1000;
       exists = false;
 
       try
@@ -118,7 +118,7 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
 
         ResultSet rs = ps.executeQuery();
 
-        if(rs.next())
+        if (rs.next())
         {
           exists = true; // ID already exists
         }
@@ -126,13 +126,17 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
         rs.close();
         ps.close();
       }
-      catch(Exception e)
+      catch (Exception e)
       {
         System.out.println("Error checking employeeID uniqueness");
       }
-
-    } while(exists);
-
+    }
     return newID;
   }
+  /*
+  private boolean CheckEmpUsername(String name)
+  {
+    
+  }
+  */
 }
