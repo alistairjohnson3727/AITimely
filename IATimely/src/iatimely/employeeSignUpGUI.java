@@ -70,33 +70,39 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
   public void actionPerformed(ActionEvent e)
   {
     String command = e.getActionCommand();
-
+    String username = userField.getText().trim();
     if (command.equals("Sign up"))
     {
-      try
+      if (CheckEmpUsername(username) == 2)
       {
-        int managerID = Integer.parseInt(idField.getText().trim());
-        int employeeID = generateUniqueEmployeeID();
-        String username = userField.getText().trim();
-        String password = passField.getText().trim();
-
-        dbAccess db = new dbAccess("iaTimely");
-        boolean success = db.addEmployeeAcc(employeeID, username, password);
-        boolean success2 = db.addEmployeeManager(managerID, employeeID);
-        db.closeDbConn();
-
-        if (success && success2)
+        try
         {
-          JOptionPane.showMessageDialog(this, "Employee account created! your id is " + employeeID);
+          int managerID = Integer.parseInt(idField.getText().trim());
+          int employeeID = generateUniqueEmployeeID();
+          String password = passField.getText().trim();
+
+          dbAccess db = new dbAccess("iaTimely");
+          boolean success = db.addEmployeeAcc(employeeID, username, password);
+          boolean success2 = db.addEmployeeManager(managerID, employeeID);
+          db.closeDbConn();
+
+          if (success && success2)
+          {
+            JOptionPane.showMessageDialog(this, "Employee account created! your id is " + employeeID);
+          }
         }
-        else
+        catch (NumberFormatException ex)
         {
-          JOptionPane.showMessageDialog(this, "Sign up failed.");
+          JOptionPane.showMessageDialog(this, "Invalid Employee ID");
         }
       }
-      catch (NumberFormatException ex)
+      else if(CheckEmpUsername(username) == 1)
       {
-        JOptionPane.showMessageDialog(this, "Invalid Employee ID");
+        JOptionPane.showMessageDialog(this, "username taken.");
+      }
+      else 
+      {
+        JOptionPane.showMessageDialog(this, "error checking");
       }
     }
   }
@@ -133,7 +139,7 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
     }
     return newID;
   }
-  
+
   private Integer CheckEmpUsername(String name)
   {
     int exists = 0;
@@ -142,9 +148,9 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
       String sql = "SELECT EmployeeLogin FROM username WHERE username = ?";
       PreparedStatement ps = db.getDbConn().prepareStatement(sql);
       ps.setString(1, name);
-      
+
       ResultSet rs = ps.executeQuery();
-      if(rs.next())
+      if (rs.next())
       {
         exists = 1;
       }
