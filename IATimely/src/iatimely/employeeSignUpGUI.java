@@ -100,10 +100,12 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
       {
         JOptionPane.showMessageDialog(this, "username taken.");
       }
+      /*
       else 
       {
         JOptionPane.showMessageDialog(this, "error checking");
       }
+      */
     }
   }
 
