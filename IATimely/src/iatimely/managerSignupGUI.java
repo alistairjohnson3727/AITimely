@@ -101,7 +101,7 @@ public class managerSignupGUI extends JFrame implements ActionListener
   {
     int newID;
     boolean exists;
-
+    
     do
     {
       newID = (int)(Math.random() * 9000) + 1000;
@@ -135,10 +135,10 @@ public class managerSignupGUI extends JFrame implements ActionListener
   
   private Integer CheckManUsername(String name)
   {
-    int exists = 0;
+    int exists;
     try
     {
-      String sql = "SELECT ManagerLogin FROM username WHERE username = ?";
+      String sql = "SELECT FROM ManagerLogin WHERE username = ?";
       PreparedStatement ps = db.getDbConn().prepareStatement(sql);
       ps.setString(1, name);
       
@@ -158,5 +158,11 @@ public class managerSignupGUI extends JFrame implements ActionListener
       exists = 0;
     }
     return exists;
+  }
+  public static void main(String[] args)
+  {
+    managerSignupGUI obj1 = new managerSignupGUI();
+    System.out.println(obj1.CheckManUsername("man1"));
+    
   }
 }

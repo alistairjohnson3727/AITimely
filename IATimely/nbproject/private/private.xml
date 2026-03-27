@@ -4,10 +4,18 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/alyj3/OneDrive/Documents/GitHub/AITimely/IATimely/src/iatimely/UpdateShiftGUI.java</file>
+            <file>file:/C:/Users/alyj3/OneDrive/Documents/GitHub/AITimely/IATimely/src/iatimely/Manager.java</file>
+            <file>file:/C:/Users/alyj3/OneDrive/Documents/GitHub/AITimely/IATimely/src/iatimely/ManagerGUI.java</file>
             <file>file:/C:/Users/alyj3/OneDrive/Documents/GitHub/AITimely/IATimely/src/iatimely/StartGUI.java</file>
-            <file>file:/C:/Users/alyj3/OneDrive/Documents/GitHub/AITimely/IATimely/src/iatimely/ViewShiftGUI.java</file>
-            <file>file:/C:/Users/alyj3/OneDrive/Documents/GitHub/AITimely/IATimely/src/iatimely/dbInstall.java</file>
+            <file>file:/C:/Users/alyj3/OneDrive/Documents/GitHub/AITimely/IATimely/src/iatimely/AddShiftGUI.java</file>
+            <file>file:/C:/Users/alyj3/OneDrive/Documents/GitHub/AITimely/IATimely/src/iatimely/Employee.java</file>
+            <file>file:/C:/Users/alyj3/OneDrive/Documents/GitHub/AITimely/IATimely/src/iatimely/employeeSignUpGUI.java</file>
             <file>file:/C:/Users/alyj3/OneDrive/Documents/GitHub/AITimely/IATimely/src/iatimely/dbAccess.java</file>
+            <file>file:/C:/Users/alyj3/OneDrive/Documents/GitHub/AITimely/IATimely/src/iatimely/EmployeeGUI.java</file>
+            <file>file:/C:/Users/alyj3/OneDrive/Documents/GitHub/AITimely/IATimely/src/iatimely/loginGUI.java</file>
+            <file>file:/C:/Users/alyj3/OneDrive/Documents/GitHub/AITimely/IATimely/src/iatimely/ViewShiftGUI.java</file>
+            <file>file:/C:/Users/alyj3/OneDrive/Documents/GitHub/AITimely/IATimely/src/iatimely/managerSignupGUI.java</file>
+            <file>file:/C:/Users/alyj3/OneDrive/Documents/GitHub/AITimely/IATimely/src/iatimely/dbInstall.java</file>
         </group>
     </open-files>
 </project-private>
