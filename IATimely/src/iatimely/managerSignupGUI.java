@@ -138,7 +138,7 @@ public class managerSignupGUI extends JFrame implements ActionListener
     int exists;
     try
     {
-      String sql = "SELECT FROM ManagerLogin WHERE username = ?";
+      String sql = "SELECT * FROM ManagerLogin WHERE username = ?";
       PreparedStatement ps = db.getDbConn().prepareStatement(sql);
       ps.setString(1, name);
       
