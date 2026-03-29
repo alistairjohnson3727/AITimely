@@ -75,10 +75,9 @@ public class loginGUI extends JFrame implements ActionListener
     if (command.equals("Employee"))
     {
       boolean valid = db.checkEmployeeLogin(username, password);
-
       if (valid)
       {
-        new EmployeeGUI();
+        new EmployeeGUI(username);
         this.dispose();
       }
       else

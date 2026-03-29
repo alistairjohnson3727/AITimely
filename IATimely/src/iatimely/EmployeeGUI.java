@@ -17,7 +17,7 @@ public class EmployeeGUI extends JFrame implements ActionListener
   private JLabel title;
   private JLabel date;
   private JButton viewShift;
-    public EmployeeGUI(String user, int id)
+    public EmployeeGUI(String username)
     {
         super("Employee Dashboard");
         this.setBounds(150, 150, 400, 300);

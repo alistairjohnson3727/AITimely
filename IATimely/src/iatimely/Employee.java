@@ -4,6 +4,8 @@
  */
 package iatimely;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author alyj3
@@ -21,4 +23,5 @@ public class Employee
     employeeID = e;
     managerID = m;
   }
+  
 }

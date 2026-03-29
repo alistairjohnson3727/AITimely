@@ -16,15 +16,21 @@ public class Manager
   private String password;
   private int managerID;
   ArrayList<Employee> emp = new ArrayList<>();
+  //Contructor for Managers 
   public Manager(String u, String p, int m)
   {
     user = u;
     password = p;
     managerID = m;
   }
-  
+  //Constructor for Employee's
   public Manager(int m)
   {
     managerID = m;
   } 
+  
+  public int getManID()
+  {
+    return managerID;
+  }
 }
