@@ -35,6 +35,7 @@ public class AddShiftGUI extends JFrame implements ActionListener
   private JButton addButton;
   private JPanel middlePanel;
   private JButton closeButton;
+  private JPanel buttonPanel;
   private dbAccess db;
 
   public AddShiftGUI()
@@ -62,11 +63,14 @@ public class AddShiftGUI extends JFrame implements ActionListener
     middlePanel.add(dateField);
     middlePanel.add(EmployeeLabel);
     middlePanel.add(employeeIDField);
+    
+    buttonPanel = new JPanel();
+    buttonPanel.add(addButton);
+    buttonPanel.add(closeButton);
 
     this.add(title, BorderLayout.NORTH);
     this.add(middlePanel, BorderLayout.CENTER);
-    this.add(addButton, BorderLayout.SOUTH);
-    this.add(closeButton,BorderLayout.SOUTH);
+    this.add(buttonPanel,BorderLayout.SOUTH);
     this.setVisible(true);
   }
 

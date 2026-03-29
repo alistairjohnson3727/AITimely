@@ -27,6 +27,7 @@ public class RemoveShiftGUI extends JFrame implements ActionListener
   private JButton removeButton;
   private JButton closeButton;
   private JPanel middlePanel;
+  private JPanel buttonPanel;
 
   public RemoveShiftGUI()
   {
@@ -38,23 +39,22 @@ public class RemoveShiftGUI extends JFrame implements ActionListener
     title = new JLabel("Remove Shift");
     shiftLabel = new JLabel("Shift ID: ");
     shiftIDField = new JTextField(20);
-    //employeeLabel = new JLabel("Employee ID");
-    //employeeIDField = new JTextField(20);
     removeButton = new JButton("Remove Shift");
     removeButton.addActionListener(this);
     closeButton = new JButton("Close");
     closeButton.addActionListener(this);
     middlePanel = new JPanel();
 
-    //middlePanel.add(employeeLabel);
-    //middlePanel.add(employeeIDField);
     middlePanel.add(shiftLabel);
     middlePanel.add(shiftIDField);
+    
+    buttonPanel = new JPanel();
+    buttonPanel.add(removeButton);
+    buttonPanel.add(closeButton);
 
     this.add(title, BorderLayout.NORTH);
     this.add(middlePanel, BorderLayout.CENTER);
-    this.add(removeButton, BorderLayout.SOUTH);
-    this.add(closeButton, BorderLayout.SOUTH);
+    this.add(buttonPanel, BorderLayout.SOUTH);
     this.setVisible(true);
   }
 

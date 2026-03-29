@@ -32,6 +32,7 @@ public class managerSignupGUI extends JFrame implements ActionListener
   private JPanel centerPanel;
   private JButton signUpButton;
   private JButton closeButton;
+  private JPanel buttonPanel;
   private dbAccess db;
 
   public managerSignupGUI()
@@ -57,11 +58,14 @@ public class managerSignupGUI extends JFrame implements ActionListener
     centerPanel.add(userField);
     centerPanel.add(passLabel);
     centerPanel.add(passField);
+    
+    buttonPanel = new JPanel();
+    buttonPanel.add(signUpButton);
+    buttonPanel.add(closeButton);
 
     this.add(titleLabel, BorderLayout.NORTH);
     this.add(centerPanel, BorderLayout.CENTER);
-    this.add(signUpButton, BorderLayout.SOUTH);
-    this.add(closeButton, BorderLayout.SOUTH);
+    this.add(buttonPanel, BorderLayout.SOUTH);
     this.setVisible(true);
   }
 

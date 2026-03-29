@@ -33,6 +33,7 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
   private JButton closeButton;
   private JLabel idLabel;
   private JTextField idField;
+  private JPanel buttonPanel;
   private dbAccess db;
 
   public employeeSignUpGUI()
@@ -63,11 +64,14 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
     centerPanel.add(passField);
     centerPanel.add(idLabel);
     centerPanel.add(idField);
+    
+    buttonPanel = new JPanel();
+    buttonPanel.add(signUpButton);
+    buttonPanel.add(closeButton);
 
     this.add(titleLabel, BorderLayout.NORTH);
     this.add(centerPanel, BorderLayout.CENTER);
-    this.add(signUpButton, BorderLayout.SOUTH);
-    this.add(closeButton, BorderLayout.SOUTH);
+    this.add(buttonPanel, BorderLayout.SOUTH);
     this.setVisible(true);
   }
 
