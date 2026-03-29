@@ -21,8 +21,6 @@ public class UpdateShiftGUI extends JFrame implements ActionListener
   private JLabel title;
   private JLabel newDescriptionLabel;
   private JTextArea newDescriptionField;
-  //private JLabel oldDateLabel;
-  //private JTextField oldDateField;
   private JLabel newDateLabel;
   private JTextField newDateField;
   private JLabel shiftLabel;
@@ -41,8 +39,6 @@ public class UpdateShiftGUI extends JFrame implements ActionListener
     title = new JLabel("Update Shift");
     newDescriptionLabel = new JLabel("New Description: ");
     newDescriptionField = new JTextArea();
-    //oldDateLabel = new JLabel("Old Date(YYYY-MM-DD): ");
-    //oldDateField = new JTextField(10);
     newDateLabel = new JLabel("New Date(YYYY-MM-DD): ");
     newDateField = new JTextField(10);
     shiftLabel = new JLabel("Shift ID: ");
@@ -55,8 +51,6 @@ public class UpdateShiftGUI extends JFrame implements ActionListener
     
     middlePanel.add(newDescriptionLabel);
     middlePanel.add(newDescriptionField);
-    //middlePanel.add(oldDateLabel);
-    //middlePanel.add(oldDateField);
     middlePanel.add(newDateLabel);
     middlePanel.add(newDateField);
     middlePanel.add(shiftLabel);
@@ -98,5 +92,4 @@ public class UpdateShiftGUI extends JFrame implements ActionListener
       this.dispose();
     }
   }
-
 }

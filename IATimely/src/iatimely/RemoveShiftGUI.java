@@ -20,8 +20,6 @@ public class RemoveShiftGUI extends JFrame implements ActionListener
 {
 
   private JLabel title;
-  //private JLabel employeeLabel;
-  //private JTextField employeeIDField;
   private JLabel shiftLabel;
   private JTextField shiftIDField;
   private JButton removeButton;

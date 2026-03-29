@@ -1,7 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+//Alistair Johnson
+//This is the start GUI of the GUI. This is where it links all my other guis to this. 
 package iatimely;
 
 import java.awt.BorderLayout;
