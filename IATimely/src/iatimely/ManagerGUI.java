@@ -18,6 +18,7 @@ public class ManagerGUI extends JFrame implements ActionListener
 {
   private JLabel title;
   private JLabel date;
+  private JLabel managerID;
   private JButton addShift;
   private JButton removeShift;
   private JButton updateShift;
@@ -30,8 +31,9 @@ public class ManagerGUI extends JFrame implements ActionListener
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         
         LocalDate currentDate = LocalDate.now();
-        title = new JLabel("Welcome Manager!", JLabel.CENTER);
+        title = new JLabel("Welcome " + man.getUser() + "!", JLabel.CENTER);
         date = new JLabel("Current Date: " + currentDate, JLabel.CENTER);
+        managerID = new JLabel("Manager ID: " + man.getManID(), JLabel.CENTER);
         addShift = new JButton("Add Shift");
         addShift.addActionListener(this);
         removeShift = new JButton("Remove Shift");
