@@ -34,6 +34,7 @@ public class AddShiftGUI extends JFrame implements ActionListener
   private JTextField employeeIDField;
   private JButton addButton;
   private JPanel middlePanel;
+  private JButton closeButton;
   private dbAccess db;
 
   public AddShiftGUI()
@@ -52,6 +53,8 @@ public class AddShiftGUI extends JFrame implements ActionListener
     addButton = new JButton("Add Shift");
     addButton.addActionListener(this);
     middlePanel = new JPanel();
+    closeButton = new JButton("Close");
+    closeButton.addActionListener(this);
 
     middlePanel.add(descriptionLabel);
     middlePanel.add(descriptionField);
@@ -63,6 +66,7 @@ public class AddShiftGUI extends JFrame implements ActionListener
     this.add(title, BorderLayout.NORTH);
     this.add(middlePanel, BorderLayout.CENTER);
     this.add(addButton, BorderLayout.SOUTH);
+    this.add(closeButton,BorderLayout.SOUTH);
     this.setVisible(true);
   }
 
@@ -90,6 +94,10 @@ public class AddShiftGUI extends JFrame implements ActionListener
         JOptionPane.showMessageDialog(this, "Error Adding Shift."); 
       }
         
+    }
+    else if(command.equals("Close"))
+    {
+      this.dispose();
     }
   }
 

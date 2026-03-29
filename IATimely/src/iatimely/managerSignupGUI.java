@@ -31,6 +31,7 @@ public class managerSignupGUI extends JFrame implements ActionListener
   private JTextField passField;
   private JPanel centerPanel;
   private JButton signUpButton;
+  private JButton closeButton;
   private dbAccess db;
 
   public managerSignupGUI()
@@ -48,6 +49,8 @@ public class managerSignupGUI extends JFrame implements ActionListener
     passField.addActionListener(this);
     signUpButton = new JButton("Sign up");
     signUpButton.addActionListener(this);
+    closeButton = new JButton("Back");
+    closeButton.addActionListener(this);
 
     centerPanel = new JPanel();
     centerPanel.add(userLabel);
@@ -58,6 +61,7 @@ public class managerSignupGUI extends JFrame implements ActionListener
     this.add(titleLabel, BorderLayout.NORTH);
     this.add(centerPanel, BorderLayout.CENTER);
     this.add(signUpButton, BorderLayout.SOUTH);
+    this.add(closeButton, BorderLayout.SOUTH);
     this.setVisible(true);
   }
 
@@ -98,6 +102,11 @@ public class managerSignupGUI extends JFrame implements ActionListener
       {
         JOptionPane.showMessageDialog(this, "username taken");
       }
+    }
+    else if(command.equals("Back"))
+    {
+      new StartGUI();
+      this.dispose();
     }
   }
 

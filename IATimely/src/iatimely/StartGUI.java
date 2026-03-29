@@ -65,10 +65,12 @@ public class StartGUI extends JFrame implements ActionListener
     if (command.equals("Login"))
     {
       new loginGUI();
+      this.dispose();
     }
     else if(command.equals("Sign up"))
     {
       new ChoiceSignupGUI();
+      this.dispose();
     }
     else if(command.equals("Close"))
     {

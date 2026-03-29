@@ -21,7 +21,8 @@ public class loginGUI extends JFrame implements ActionListener
 
   private JButton employeeButton;
   private JButton managerButton;
-
+  private JButton closeButton;
+  
   private JPanel buttonPanel;
   private JPanel centerPanel;
 
@@ -46,9 +47,13 @@ public class loginGUI extends JFrame implements ActionListener
     managerButton = new JButton("Manager");
     managerButton.addActionListener(this);
 
+    closeButton = new JButton("Back");
+    closeButton.addActionListener(this);
+    
     buttonPanel = new JPanel();
     buttonPanel.add(employeeButton);
     buttonPanel.add(managerButton);
+    buttonPanel.add(closeButton);
 
     centerPanel = new JPanel();
     centerPanel.add(userLabel);
@@ -116,7 +121,12 @@ public class loginGUI extends JFrame implements ActionListener
         popupMessageGUI.show(this, "Invalid manager login");
       }
     }
-
+    
+    else if(command.equals("Back"))
+    {
+      new StartGUI();
+      this.dispose();
+    }
     db.closeDbConn();
   }
 }

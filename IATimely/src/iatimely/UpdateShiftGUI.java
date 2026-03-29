@@ -29,6 +29,8 @@ public class UpdateShiftGUI extends JFrame implements ActionListener
   private JTextField shiftIDField;
   private JButton updateButton;
   private JPanel middlePanel;
+  private JButton closeButton;
+  private JPanel buttonPanel;
   public UpdateShiftGUI()
   {
 
@@ -47,6 +49,8 @@ public class UpdateShiftGUI extends JFrame implements ActionListener
     shiftIDField = new JTextField(20);
     updateButton = new JButton("Update Shift");
     updateButton.addActionListener(this);
+    closeButton = new JButton("Close");
+    closeButton.addActionListener(this);
     middlePanel = new JPanel();
     
     middlePanel.add(newDescriptionLabel);
@@ -58,9 +62,14 @@ public class UpdateShiftGUI extends JFrame implements ActionListener
     middlePanel.add(shiftLabel);
     middlePanel.add(shiftIDField);
     
+    buttonPanel = new JPanel();
+    buttonPanel.add(updateButton);
+    buttonPanel.add(closeButton);
+    
     this.add(title, BorderLayout.NORTH);
     this.add(middlePanel,BorderLayout.CENTER);
     this.add(updateButton,BorderLayout.SOUTH);
+    this.add(buttonPanel,BorderLayout.SOUTH);
     this.setVisible(true);
   }
 
@@ -84,6 +93,10 @@ public class UpdateShiftGUI extends JFrame implements ActionListener
       {
         JOptionPane.showMessageDialog(this, "Error Updating"); 
       }
+    }
+    else if(command.equals("Close"))
+    {
+      this.dispose();
     }
   }
 

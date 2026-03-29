@@ -34,6 +34,7 @@ public class ManagerGUI extends JFrame implements ActionListener
         title = new JLabel("Welcome " + man.getUser() + "!", JLabel.CENTER);
         date = new JLabel("Current Date: " + currentDate, JLabel.CENTER);
         managerID = new JLabel("Manager ID: " + man.getManID(), JLabel.CENTER);
+        
         addShift = new JButton("Add Shift");
         addShift.addActionListener(this);
         removeShift = new JButton("Remove Shift");

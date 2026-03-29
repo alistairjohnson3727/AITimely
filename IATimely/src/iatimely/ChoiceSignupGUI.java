@@ -18,7 +18,6 @@ import javax.swing.JPanel;
  */
 public class ChoiceSignupGUI extends JFrame implements ActionListener
 {
-  private JLabel titlePanel;
   private JButton signupManButton;
   private JButton signupEmpButton;
   private JButton closeButton;
@@ -26,17 +25,18 @@ public class ChoiceSignupGUI extends JFrame implements ActionListener
   public ChoiceSignupGUI()
   {
     super("Choose");
-    this.setBounds(100,100,200,100);
+    this.setBounds(100,100,200,150);
     this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     signupEmpButton = new JButton("Employee");
     signupEmpButton.addActionListener(this);
     signupManButton = new JButton("Manager");
     signupManButton.addActionListener(this);
-    titlePanel = new JLabel("Choose manager or employee sign up");
-    
-    this.add(titlePanel, BorderLayout.NORTH);
-    this.add(signupManButton,BorderLayout.CENTER);
-    this.add(signupEmpButton,BorderLayout.SOUTH);
+    closeButton = new JButton("Back");
+    closeButton.addActionListener(this);
+
+    this.add(signupManButton,BorderLayout.NORTH);
+    this.add(signupEmpButton,BorderLayout.CENTER);
+    this.add(closeButton, BorderLayout.SOUTH);
     this.setVisible(true);
   }
 
@@ -47,10 +47,17 @@ public class ChoiceSignupGUI extends JFrame implements ActionListener
     if (command.equals("Employee"))
     {
       new employeeSignUpGUI();
+      this.dispose();
     }
     else if(command.equals("Manager"))
     {
       new managerSignupGUI();
+      this.dispose();
+    }
+    else if(command.equals("Back"))
+    {
+      new StartGUI();
+      this.dispose();
     }
   }
 }

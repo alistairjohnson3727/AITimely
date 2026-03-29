@@ -24,6 +24,7 @@ public class EmployeeGUI extends JFrame implements ActionListener
   private JLabel title;
   private JLabel date;
   private JLabel EmployeeID;
+  private JButton closeButton;
   private JTable tblShifts;
   private JScrollPane scrollPane;
 
@@ -42,12 +43,15 @@ public class EmployeeGUI extends JFrame implements ActionListener
     topPanel.add(EmployeeID);
     topPanel.add(date);
 
+    closeButton = new JButton("Log out");
+    closeButton.addActionListener(this);
+    
     tblShifts = new JTable();
     scrollPane = new JScrollPane(tblShifts);
 
     this.add(topPanel, BorderLayout.NORTH);
     this.add(scrollPane, BorderLayout.CENTER);
-
+    this.add(closeButton,BorderLayout.SOUTH);
     
     // Automatically load employee shifts
     loadEmployeeShifts(emp);
@@ -59,6 +63,11 @@ public class EmployeeGUI extends JFrame implements ActionListener
   public void actionPerformed(ActionEvent err)
   {
     String command = err.getActionCommand();
+    if(command.equals("Log out"))
+    {
+      new StartGUI();
+      this.dispose();
+    }
   }
 
   private void loadEmployeeShifts(Employee emp)

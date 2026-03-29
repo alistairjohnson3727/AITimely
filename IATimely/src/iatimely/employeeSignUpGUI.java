@@ -30,6 +30,7 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
   private JTextField passField;
   private JPanel centerPanel;
   private JButton signUpButton;
+  private JButton closeButton;
   private JLabel idLabel;
   private JTextField idField;
   private dbAccess db;
@@ -52,6 +53,8 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
     idField.addActionListener(this);
     signUpButton = new JButton("Sign up");
     signUpButton.addActionListener(this);
+    closeButton = new JButton("Back");
+    closeButton.addActionListener(this);
 
     centerPanel = new JPanel();
     centerPanel.add(userLabel);
@@ -64,6 +67,7 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
     this.add(titleLabel, BorderLayout.NORTH);
     this.add(centerPanel, BorderLayout.CENTER);
     this.add(signUpButton, BorderLayout.SOUTH);
+    this.add(closeButton, BorderLayout.SOUTH);
     this.setVisible(true);
   }
 
@@ -106,6 +110,11 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
         JOptionPane.showMessageDialog(this, "error checking");
       }
       */
+    }
+    else if(command.equals("Back"))
+    {
+      new StartGUI();
+      this.dispose();
     }
   }
 
