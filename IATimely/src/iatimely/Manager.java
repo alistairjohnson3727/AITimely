@@ -4,11 +4,27 @@
  */
 package iatimely;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author alyj3
  */
 public class Manager
 {
-  //I wrote this class, then I forgot to save so its all gone :(
+  private String user;
+  private String password;
+  private int managerID;
+  ArrayList<Employee> emp = new ArrayList<>();
+  public Manager(String u, String p, int m)
+  {
+    user = u;
+    password = p;
+    managerID = m;
+  }
+  
+  public Manager(int m)
+  {
+    managerID = m;
+  } 
 }

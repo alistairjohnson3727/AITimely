@@ -10,5 +10,15 @@ package iatimely;
  */
 public class Employee
 {
-  //I wrote the whole class, and forgot to save so its all gone :(
+  private String username;
+  private String password;
+  private int employeeID;
+  private int managerID;
+  public Employee(String u, String p, int e, int m)
+  {
+    username = u;
+    password = p;
+    employeeID = e;
+    managerID = m;
+  }
 }
