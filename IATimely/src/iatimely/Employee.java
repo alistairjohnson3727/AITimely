@@ -15,13 +15,16 @@ public class Employee
   private String username;
   private String password;
   private int employeeID;
-  private int managerID;
-  public Employee(String u, String p, int e, int m)
+
+  public Employee(String u, String p, int e)
   {
     username = u;
     password = p;
     employeeID = e;
-    managerID = m;
+
   }
-  
+  public int getEmployeeID()
+  {
+    return employeeID;
+  }
 }

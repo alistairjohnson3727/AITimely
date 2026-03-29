@@ -441,6 +441,33 @@ public class dbAccess
       return false;
     }
   }
+  
+  public Integer getEmployeeIDByUsername(String username)
+{
+    Integer employeeID = -1; // default null if not found
+    try
+    {
+        String sql = "SELECT employeeID FROM EmployeeLogin WHERE username = ?";
+        PreparedStatement ps = this.dbConn.prepareStatement(sql);
+        ps.setString(1, username);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) // if a match is found
+        {
+            employeeID = rs.getInt("employeeID");
+        }
+
+        rs.close();
+        ps.close();
+    }
+    catch (SQLException e)
+    {
+        System.out.println("Error getting employee ID: " + e.getMessage());
+    }
+
+    return employeeID; // null if not found
+}
 
   //convert arraylist to 2d array
   public Object[][] to2dArray(ArrayList<ArrayList<String>> data)

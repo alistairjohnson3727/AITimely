@@ -77,8 +77,17 @@ public class loginGUI extends JFrame implements ActionListener
       boolean valid = db.checkEmployeeLogin(username, password);
       if (valid)
       {
-        new EmployeeGUI(username);
-        this.dispose();
+        int id = db.getEmployeeIDByUsername(username);
+        if(id == -1)
+        {
+          popupMessageGUI.show(this, "error finding id");
+        }
+        else
+        {
+          Employee emp = new Employee(username, password, id);
+          new EmployeeGUI(emp);
+          this.dispose();
+        }
       }
       else
       {
@@ -88,9 +97,9 @@ public class loginGUI extends JFrame implements ActionListener
     else if (command.equals("Manager"))
     {
       boolean valid = db.checkManagerLogin(username, password);
-
       if (valid)
       {
+        int id;
         new ManagerGUI();
         this.dispose();
       }
