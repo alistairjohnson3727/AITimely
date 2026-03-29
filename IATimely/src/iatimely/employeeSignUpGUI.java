@@ -69,11 +69,12 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
 
   public void actionPerformed(ActionEvent e)
   {
+    dbAccess db = new dbAccess("iaTimely");
     String command = e.getActionCommand();
     String username = userField.getText().trim();
     if (command.equals("Sign up"))
     {
-      if (CheckEmpUsername(username) == 2)
+      if (db.isEmpUserAvailable(username))
       {
         try
         {
@@ -81,7 +82,6 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
           int employeeID = generateUniqueEmployeeID();
           String password = passField.getText().trim();
 
-          dbAccess db = new dbAccess("iaTimely");
           boolean success = db.addEmployeeAcc(employeeID, username, password);
           boolean success2 = db.addEmployeeManager(managerID, employeeID);
           db.closeDbConn();
@@ -96,7 +96,7 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
           JOptionPane.showMessageDialog(this, "Invalid Employee ID");
         }
       }
-      else if(CheckEmpUsername(username) == 1)
+      else
       {
         JOptionPane.showMessageDialog(this, "username taken.");
       }
@@ -140,32 +140,5 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
       }
     }
     return newID;
-  }
-
-  private Integer CheckEmpUsername(String name)
-  {
-    int exists = 0;
-    try
-    {
-      String sql = "SELECT EmployeeLogin FROM username WHERE username = ?";
-      PreparedStatement ps = db.getDbConn().prepareStatement(sql);
-      ps.setString(1, name);
-
-      ResultSet rs = ps.executeQuery();
-      if (rs.next())
-      {
-        exists = 1;
-      }
-      else
-      {
-        exists = 2;
-      }
-    }
-    catch (Exception e)
-    {
-      System.out.println("Error checking employee username uniqueness");
-      exists = 0;
-    }
-    return exists;
   }
 }

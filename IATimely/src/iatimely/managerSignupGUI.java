@@ -55,7 +55,6 @@ public class managerSignupGUI extends JFrame implements ActionListener
     centerPanel.add(passLabel);
     centerPanel.add(passField);
 
-
     this.add(titleLabel, BorderLayout.NORTH);
     this.add(centerPanel, BorderLayout.CENTER);
     this.add(signUpButton, BorderLayout.SOUTH);
@@ -64,19 +63,20 @@ public class managerSignupGUI extends JFrame implements ActionListener
 
   public void actionPerformed(ActionEvent e)
   {
+    int managerID = generateUniqueManagerID();
+    String username = userField.getText().trim();
+    String password = passField.getText().trim();
+
+    dbAccess db = new dbAccess("iaTimely");
     String command = e.getActionCommand();
 
     if (command.equals("Sign up"))
     {
-      if (command.equals("Sign up"))
+      if (db.isManUserAvailable(username))
       {
         try
         {
-          int managerID = generateUniqueManagerID();
-          String username = userField.getText().trim();
-          String password = passField.getText().trim();
 
-          dbAccess db = new dbAccess("iaTimely");
           boolean success = db.addManagerAcc(managerID, username, password);
           db.closeDbConn();
 
@@ -91,20 +91,24 @@ public class managerSignupGUI extends JFrame implements ActionListener
         }
         catch (NumberFormatException ex)
         {
-          JOptionPane.showMessageDialog(this, "Invalid Manager ID");
+          JOptionPane.showMessageDialog(this, "Error signing up");
         }
+      }
+      else
+      {
+        JOptionPane.showMessageDialog(this, "username taken");
       }
     }
   }
-  
+
   private Integer generateUniqueManagerID()
   {
     int newID;
     boolean exists;
-    
+
     do
     {
-      newID = (int)(Math.random() * 9000) + 1000;
+      newID = (int) (Math.random() * 9000) + 1000;
       exists = false;
 
       try
@@ -115,7 +119,7 @@ public class managerSignupGUI extends JFrame implements ActionListener
 
         ResultSet rs = ps.executeQuery();
 
-        if(rs.next())
+        if (rs.next())
         {
           exists = true; // ID already exists
         }
@@ -123,46 +127,13 @@ public class managerSignupGUI extends JFrame implements ActionListener
         rs.close();
         ps.close();
       }
-      catch(Exception e)
+      catch (Exception e)
       {
         System.out.println("Error checking managerID uniqueness");
       }
 
-    } while(exists);
+    } while (exists);
 
     return newID;
-  }
-  
-  private Integer CheckManUsername(String name)
-  {
-    int exists;
-    try
-    {
-      String sql = "SELECT * FROM ManagerLogin WHERE username = ?";
-      PreparedStatement ps = db.getDbConn().prepareStatement(sql);
-      ps.setString(1, name);
-      
-      ResultSet rs = ps.executeQuery();
-      if(rs.next())
-      {
-        exists = 1;
-      }
-      else
-      {
-        exists = 2;
-      }
-    }
-    catch (Exception e)
-    {
-      System.out.println("Error checking manager username uniqueness");
-      exists = 0;
-    }
-    return exists;
-  }
-  public static void main(String[] args)
-  {
-    managerSignupGUI obj1 = new managerSignupGUI();
-    System.out.println(obj1.CheckManUsername("man1"));
-    
   }
 }

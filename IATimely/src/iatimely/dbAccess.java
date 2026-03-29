@@ -383,8 +383,6 @@ public class dbAccess
       stmt.setString(1, username);
       stmt.setString(2, password);
 
-      stmt.setString(2, password);
-
       ResultSet rs = stmt.executeQuery();
 
       return rs.next();
@@ -392,6 +390,54 @@ public class dbAccess
     catch (Exception e)
     {
       System.out.println("Manager login error: " + e.getMessage());
+      return false;
+    }
+  }
+
+  public boolean isEmpUserAvailable(String username)
+  {
+    try
+    {
+      String sql = "SELECT username FROM EmployeeLogin WHERE username = ?";
+      PreparedStatement ps = this.dbConn.prepareStatement(sql);
+      ps.setString(1, username);
+
+      ResultSet rs = ps.executeQuery();
+
+      boolean available = !rs.next(); // true if NOT found
+
+      rs.close();
+      ps.close();
+
+      return available;
+    }
+    catch (SQLException e)
+    {
+      System.out.println("Error checking employee username.");
+      return false; // safer to block if error happens
+    }
+  }
+
+  public boolean isManUserAvailable(String username)
+  {
+    try
+    {
+      String sql = "SELECT username FROM ManagerLogin WHERE username = ?";
+      PreparedStatement ps = this.dbConn.prepareStatement(sql);
+      ps.setString(1, username);
+
+      ResultSet rs = ps.executeQuery();
+
+      boolean available = !rs.next();
+
+      rs.close();
+      ps.close();
+
+      return available;
+    }
+    catch (SQLException e)
+    {
+      System.out.println("Error checking manager username.");
       return false;
     }
   }
