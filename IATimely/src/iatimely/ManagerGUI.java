@@ -23,7 +23,7 @@ public class ManagerGUI extends JFrame implements ActionListener
   private JButton updateShift;
   private JPanel buttonPanel;
   private JButton viewEmpShift;
-    public ManagerGUI()
+    public ManagerGUI(Manager man)
     {
         super("Manager Dashboard");
         this.setBounds(150, 150, 400, 300);

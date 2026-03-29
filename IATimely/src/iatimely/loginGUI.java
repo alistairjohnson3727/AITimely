@@ -99,10 +99,18 @@ public class loginGUI extends JFrame implements ActionListener
       boolean valid = db.checkManagerLogin(username, password);
       if (valid)
       {
-        int id;
-        new ManagerGUI();
-        this.dispose();
-      }
+        int id = db.getManagerIDByUsername(username);
+        if(id == -1)
+        {
+          popupMessageGUI.show(this, "error getting id");
+        }
+        else
+        {
+          Manager man = new Manager(username, password, id);
+          new ManagerGUI(man);
+          this.dispose();
+        }
+      } 
       else
       {
         popupMessageGUI.show(this, "Invalid manager login");
