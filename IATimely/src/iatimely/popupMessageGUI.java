@@ -13,6 +13,7 @@ public class popupMessageGUI
 {
   public static void show(Component parent, String message)
   {
+    //creates the popup
     JOptionPane.showMessageDialog(parent, message);
   }
 }

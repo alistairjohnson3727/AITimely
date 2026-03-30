@@ -20,12 +20,12 @@ public class Manager
     password = p;
     managerID = m;
   }
-  
+  // returns the user
   public String getUser()
   {
     return user;
   }
-  
+  //returns the managers ID
   public int getManID()
   {
     return managerID;

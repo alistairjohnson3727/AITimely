@@ -21,12 +21,12 @@ public class Employee
     employeeID = e;
 
   }
-  
+  //returns the user 
   public String getUser()
   {
     return username;
   }
-  
+  //returns the employees id 
   public int getEmployeeID()
   {
     return employeeID;

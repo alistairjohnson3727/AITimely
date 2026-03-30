@@ -15,46 +15,53 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
- *
- * @author alyj3
+ * GUI for creating a new Employee account
  */
 public class employeeSignUpGUI extends JFrame implements ActionListener
 {
-
+  // Labels and input fields
   private JLabel titleLabel;
   private JLabel userLabel;
   private JLabel passLabel;
+  private JLabel idLabel;
   private JTextField userField;
   private JTextField passField;
+  private JTextField idField;
+
+  // Panels for layout
   private JPanel centerPanel;
+  private JPanel buttonPanel;
+
+  // Buttons
   private JButton signUpButton;
   private JButton closeButton;
-  private JLabel idLabel;
-  private JTextField idField;
-  private JPanel buttonPanel;
+
+  // Database access object
   private dbAccess db;
 
+  // Constructor: sets up the GUI
   public employeeSignUpGUI()
   {
-    super("employee sign up");
-    this.setBounds(100, 100, 400, 400);
+    super("Employee Sign Up"); // window title
+    this.setBounds(100, 100, 400, 400); // window size and position
     this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
+    // Create labels and text fields
     titleLabel = new JLabel("Sign Up");
     userLabel = new JLabel("Username: ");
     userField = new JTextField(20);
-    userField.addActionListener(this);
     passLabel = new JLabel("Password: ");
     passField = new JTextField(20);
-    passField.addActionListener(this);
-    idLabel = new JLabel("manager Id:");
+    idLabel = new JLabel("Manager ID: ");
     idField = new JTextField(20);
-    idField.addActionListener(this);
+
+    // Create buttons
     signUpButton = new JButton("Sign up");
     signUpButton.addActionListener(this);
     closeButton = new JButton("Back");
     closeButton.addActionListener(this);
 
+    // Center panel: holds input fields
     centerPanel = new JPanel();
     centerPanel.add(userLabel);
     centerPanel.add(userField);
@@ -63,74 +70,84 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
     centerPanel.add(idLabel);
     centerPanel.add(idField);
     
+    // Button panel: holds buttons
     buttonPanel = new JPanel();
     buttonPanel.add(signUpButton);
     buttonPanel.add(closeButton);
 
+    // Add panels and labels to frame
     this.add(titleLabel, BorderLayout.NORTH);
     this.add(centerPanel, BorderLayout.CENTER);
     this.add(buttonPanel, BorderLayout.SOUTH);
-    this.setVisible(true);
+
+    this.setVisible(true); // show GUI
   }
 
+  // Handle button clicks
+  @Override
   public void actionPerformed(ActionEvent e)
   {
-    dbAccess db = new dbAccess("iaTimely");
+    dbAccess db = new dbAccess("iaTimely"); // connect to database
     String command = e.getActionCommand();
     String username = userField.getText().trim();
+
     if (command.equals("Sign up"))
     {
+      // Check if username is available
       if (db.isEmpUserAvailable(username))
       {
         try
         {
-          int managerID = Integer.parseInt(idField.getText().trim());
-          int employeeID = generateUniqueEmployeeID();
+          int managerID = Integer.parseInt(idField.getText().trim()); // get manager ID
+          int employeeID = generateUniqueEmployeeID(); // generate unique employee ID
           String password = passField.getText().trim();
 
+          // Add employee account and link to manager
           boolean success = db.addEmployeeAcc(employeeID, username, password);
           boolean success2 = db.addEmployeeManager(managerID, employeeID);
           db.closeDbConn();
 
           if (success && success2)
           {
-            JOptionPane.showMessageDialog(this, "Employee account created! your id is " + employeeID);
+            JOptionPane.showMessageDialog(this, "Employee account created! Your ID is " + employeeID);
           }
         }
         catch (NumberFormatException ex)
         {
-          JOptionPane.showMessageDialog(this, "Invalid Employee ID");
+          JOptionPane.showMessageDialog(this, "Invalid Manager ID");
         }
       }
       else
       {
-        JOptionPane.showMessageDialog(this, "username taken.");
+        JOptionPane.showMessageDialog(this, "Username taken.");
       }
     }
     else if(command.equals("Back"))
     {
-      new StartGUI();
-      this.dispose();
+      new StartGUI(); // return to start page
+      this.dispose(); // close current window
     }
   }
 
+  // Generate a unique employee ID
   private Integer generateUniqueEmployeeID()
   {
-    int newID = (int) (Math.random() * 9000) + 1000;
-    boolean exists = true;
-    while (exists)
+    int newID;
+    boolean exists;
+
+    do
     {
-      newID = (int) (Math.random() * 9000) + 1000;
+      newID = (int) (Math.random() * 9000) + 1000; // random 4-digit ID
       exists = false;
 
       try
       {
+        // Check if ID already exists in the database
         String sql = "SELECT EmployeeLogin FROM employeeID WHERE employeeID = ?";
         PreparedStatement ps = db.getDbConn().prepareStatement(sql);
         ps.setInt(1, newID);
 
         ResultSet rs = ps.executeQuery();
-
         if (rs.next())
         {
           exists = true; // ID already exists
@@ -143,7 +160,8 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
       {
         System.out.println("Error checking employeeID uniqueness");
       }
-    }
+    } while (exists);
+
     return newID;
   }
 }

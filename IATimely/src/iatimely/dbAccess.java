@@ -594,15 +594,16 @@ public class dbAccess
 
   public static void main(String[] args)
   {
+    
     //Databases name
     dbAccess db = new dbAccess("iaTimely");
-
+    
     //column names for the TestDatabase
     String[] columnNames =
     {
       "year", "make", "model"
     };
-
+    /*
     // ADD
     String insert = "INSERT INTO TestDatabase VALUES (?, ?, ?)";
     db.addRecord(insert, new Object[]
@@ -657,7 +658,7 @@ public class dbAccess
     db.removeShift(4);
     db.removeEmployeeManager(0, 3);
     //db.removeEmployeeShift(0, 4);
-
+    */
     db.clearAllData();
 
     // VIEW TABLE
