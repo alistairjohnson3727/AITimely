@@ -117,11 +117,7 @@ public class ManagerGUI extends JFrame implements ActionListener
     {
       new UpdateShiftGUI(man);
     }
-    // Open View Shift window
-    else if (command.equals("View Shift"))
-    {
-      new ViewShiftGUI();
-    }
+    
     // Log out and return to start screen
     else if (command.equals("Log Out"))
     {

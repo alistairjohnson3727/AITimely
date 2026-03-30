@@ -108,6 +108,10 @@ public class RemoveShiftGUI extends JFrame implements ActionListener
           JOptionPane.showMessageDialog(this, "Error removing");
         }
       }
+      else
+      {
+        JOptionPane.showMessageDialog(this, "this employee does not have this shift, and/or this is not your employee");
+      }
     }
   }
 }
