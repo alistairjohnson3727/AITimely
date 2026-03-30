@@ -469,6 +469,35 @@ public class dbAccess
     }
   }
 
+  // Check if a manager ID exists
+  public boolean managerExists(int managerID)
+  {
+    try
+    {
+      // SQL query to check if manager exists
+      String sql = "SELECT * FROM ManagerLogin WHERE managerID = ?";
+      PreparedStatement ps = this.dbConn.prepareStatement(sql);
+      ps.setInt(1, managerID);
+
+      // Execute query
+      ResultSet rs = ps.executeQuery();
+
+      // True if a record exists
+      boolean exists = rs.next();
+
+      // Close resources
+      rs.close();
+      ps.close();
+
+      return exists;
+    }
+    catch (SQLException e)
+    {
+      System.out.println("Error checking manager existence: " + e.getMessage());
+      return false;
+    }
+  }
+
   public boolean isEmpHaveShift(int shiftID, int employeeID)
   {
     try

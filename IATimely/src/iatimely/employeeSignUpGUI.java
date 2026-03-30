@@ -91,15 +91,15 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
     dbAccess db = new dbAccess("iaTimely"); // connect to database
     String command = e.getActionCommand();
     String username = userField.getText().trim();
-
+    int managerID = Integer.parseInt(idField.getText().trim()); // get manager ID
+    
     if (command.equals("Sign up"))
     {
       // Check if username is available
-      if (db.isEmpUserAvailable(username))
+      if ((db.isEmpUserAvailable(username)) && (db.managerExists(managerID)))
       {
         try
         {
-          int managerID = Integer.parseInt(idField.getText().trim()); // get manager ID
           int employeeID = generateUniqueEmployeeID(); // generate unique employee ID
           String password = passField.getText().trim();
 
@@ -120,7 +120,7 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
       }
       else
       {
-        JOptionPane.showMessageDialog(this, "Username taken.");
+        JOptionPane.showMessageDialog(this, "Username taken and/or manager code does not exist.");
       }
     }
     else if (command.equals("Back"))
