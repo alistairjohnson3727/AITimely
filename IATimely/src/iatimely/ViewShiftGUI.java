@@ -79,7 +79,7 @@ public class ViewShiftGUI extends JFrame implements ActionListener
 
         if (check1)
         {
-          
+          new ViewTableGUI(employeeID);
         }
         else
         {

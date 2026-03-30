@@ -29,6 +29,7 @@ public class ManagerGUI extends JFrame implements ActionListener
   private JButton addShift;
   private JButton removeShift;
   private JButton updateShift;
+  private JButton viewShift;
   private JButton closeButton;
 
   // Panels and table
@@ -75,6 +76,9 @@ public class ManagerGUI extends JFrame implements ActionListener
     updateShift = new JButton("Update Shift");
     updateShift.addActionListener(this);
 
+    viewShift = new JButton("View Shift");
+    viewShift.addActionListener(this);
+    
     closeButton = new JButton("Log Out");
     closeButton.addActionListener(this);
 
@@ -83,6 +87,7 @@ public class ManagerGUI extends JFrame implements ActionListener
     buttonPanel.add(addShift);
     buttonPanel.add(removeShift);
     buttonPanel.add(updateShift);
+    buttonPanel.add(viewShift);
     buttonPanel.add(closeButton);
 
     // Add components to frame
@@ -118,6 +123,10 @@ public class ManagerGUI extends JFrame implements ActionListener
       new UpdateShiftGUI(man);
     }
     
+    else if (command.equals("View Shift"))
+    {
+      new ViewShiftGUI(man);
+    }
     // Log out and return to start screen
     else if (command.equals("Log Out"))
     {

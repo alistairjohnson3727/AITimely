@@ -21,7 +21,7 @@ public class ViewTableGUI extends JFrame implements ActionListener
   // Database access
   private dbAccess db;
 
-  public ViewTableGUI()
+  public ViewTableGUI(int empID)
   {
     super("View Shift"); // Fixed title
     this.setBounds(300, 300, 400, 400);
@@ -33,8 +33,8 @@ public class ViewTableGUI extends JFrame implements ActionListener
     scrollPane = new JScrollPane(tblShifts);
     
     this.add(scrollPane, BorderLayout.CENTER);
-
-
+    loadEmployeeShifts(empID);
+    
     this.setVisible(true);
   }
 
