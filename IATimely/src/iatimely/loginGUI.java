@@ -1,3 +1,5 @@
+//Alistair Johnson
+//This is the login gui for both employees and managers 
 package iatimely;
 
 import java.awt.BorderLayout;

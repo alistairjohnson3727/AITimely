@@ -1,3 +1,5 @@
+//Alistair Johnson
+//This class updates shifts from employees
 package iatimely;
 
 import java.awt.BorderLayout;

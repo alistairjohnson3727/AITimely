@@ -1,3 +1,5 @@
+//Alistair Johnson
+//This gui lets the manager removes shifts from employees
 package iatimely;
 
 import java.awt.BorderLayout;

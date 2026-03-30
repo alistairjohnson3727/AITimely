@@ -1,7 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+//Alistair Johnson
+// This class lets the user choose to sign up as a manager or employee
 package iatimely;
 
 import java.awt.BorderLayout;

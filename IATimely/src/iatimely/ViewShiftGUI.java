@@ -1,3 +1,5 @@
+//Alistair Johnson
+//This class allows managers to view shift descriptions 
 package iatimely;
 
 import java.awt.BorderLayout;
