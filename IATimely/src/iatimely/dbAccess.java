@@ -439,6 +439,36 @@ public class dbAccess
     return description;
   }
 
+  // Check if an employee is under a specific manager
+  public boolean isEmployeeUnderManager(int employeeID, int managerID)
+  {
+    try
+    {
+      // SQL query to check if the employee-manager pair exists
+      String sql = "SELECT * FROM EmployeeManager WHERE managerID = ? AND employeeID = ?";
+      PreparedStatement ps = this.dbConn.prepareStatement(sql);
+      ps.setInt(1, managerID);
+      ps.setInt(2, employeeID);
+
+      // Execute query
+      ResultSet rs = ps.executeQuery();
+
+      // True if a record exists
+      boolean exists = rs.next();
+
+      // Close resources
+      rs.close();
+      ps.close();
+
+      return exists;
+    }
+    catch (SQLException e)
+    {
+      System.out.println("Error checking employee-manager: " + e.getMessage());
+      return false;
+    }
+  }
+
   // Check employee login credentials
   public boolean checkEmployeeLogin(String username, String password)
   {
