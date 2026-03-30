@@ -17,4 +17,6 @@ Managers after logging in have the ability to assign, remove, update, and view a
 
 Everything is linked in GUI and tested so please dont worry about errors. 
 
+Note: When signing up as a manager remember your code, as your employee if they want to sign up have to put there manager code. After that, you will be able to see all the codes so dont worry about memorizing
+
 Have fun!
