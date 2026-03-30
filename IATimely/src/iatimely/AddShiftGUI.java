@@ -1,5 +1,3 @@
-//Alistair Johnson
-//This class adds shifts to employees 
 package iatimely;
 
 import java.sql.PreparedStatement;
@@ -7,14 +5,7 @@ import java.sql.ResultSet;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 /**
  * GUI for adding a shift
@@ -42,111 +33,110 @@ public class AddShiftGUI extends JFrame implements ActionListener
   // Constructor: sets up the GUI window and components
   public AddShiftGUI(Manager m)
   {
-    super("Add Shift"); // window title
-    this.setBounds(300, 300, 400, 400); // position and size
-    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // close behavior
+    super("Add Shift");
+    this.setBounds(300, 300, 400, 400);
+    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
     man = m;
 
+    // Initialize database connection
+    db = new dbAccess("iaTimely");
+
     // Initialize labels and input fields
-    title = new JLabel("Add Shift");
+    title = new JLabel("Add Shift", SwingConstants.CENTER);
     descriptionLabel = new JLabel("Description: ");
-    descriptionField = new JTextArea();
-    dateLabel = new JLabel("Date(YYYY-MM-DD): ");
+    descriptionField = new JTextArea(5, 20);
+    dateLabel = new JLabel("Date (YYYY-MM-DD): ");
     dateField = new JTextField(10);
     EmployeeLabel = new JLabel("Employee ID: ");
     employeeIDField = new JTextField(20);
 
-    // Create buttons and attach event listeners
     addButton = new JButton("Add Shift");
     addButton.addActionListener(this);
 
-    // Panel to hold input fields
     middlePanel = new JPanel();
     middlePanel.add(descriptionLabel);
-    middlePanel.add(descriptionField);
+    middlePanel.add(new JScrollPane(descriptionField));
     middlePanel.add(dateLabel);
     middlePanel.add(dateField);
     middlePanel.add(EmployeeLabel);
     middlePanel.add(employeeIDField);
 
-    // Panel to hold buttons
     buttonPanel = new JPanel();
     buttonPanel.add(addButton);
 
-    // Add components to the frame
     this.add(title, BorderLayout.NORTH);
     this.add(middlePanel, BorderLayout.CENTER);
     this.add(buttonPanel, BorderLayout.SOUTH);
 
-    this.setVisible(true); // make window visible
+    this.setVisible(true);
   }
 
-  // Handles button clicks
   @Override
   public void actionPerformed(ActionEvent e)
   {
     String command = e.getActionCommand();
-    int employeeID = Integer.parseInt(employeeIDField.getText()); // get employee ID
-    // If "Add Shift" button is clicked
     if (command.equals("Add Shift"))
     {
-      if (db.isEmployeeUnderManager(employeeID, man.getManID()))
+      try
       {
-        int shiftID = generateUniqueShiftID(); // generate unique ID
-        String description = descriptionField.getText().trim(); // get description
-        String date = dateField.getText().trim(); // get date
+        int employeeID = Integer.parseInt(employeeIDField.getText());
 
-        // Create database connection
-        dbAccess db = new dbAccess("iaTimely");
-
-        // Insert shift and link to employee
-        boolean success1 = db.addShift(shiftID, description, date);
-        boolean success2 = db.addShiftEmployee(shiftID, employeeID);
-
-        db.closeDbConn(); // close connection
-
-        // Show success or error message
-        if (success1 && success2)
+        if (db.isEmployeeUnderManager(employeeID, man.getManID()))
         {
-          JOptionPane.showMessageDialog(this, "Shift Added! shift id is " + shiftID);
+          int shiftID = generateUniqueShiftID();
+          String description = descriptionField.getText().trim();
+          String date = dateField.getText().trim();
+
+          boolean success1 = db.addShift(shiftID, description, date);
+          boolean success2 = db.addShiftEmployee(shiftID, employeeID);
+
+          if (success1 && success2)
+          {
+            JOptionPane.showMessageDialog(this, "Shift Added! Shift ID: " + shiftID);
+          }
+          else
+          {
+            JOptionPane.showMessageDialog(this, "Error Adding Shift.");
+          }
         }
         else
         {
-          JOptionPane.showMessageDialog(this, "Error Adding Shift.");
+          JOptionPane.showMessageDialog(this, "You do not have this employee.");
         }
       }
-      else
+      catch (NumberFormatException ex)
       {
-        JOptionPane.showMessageDialog(this, "User does have have this employee");
+        JOptionPane.showMessageDialog(this, "Invalid Employee ID.");
+      }
+      catch (Exception ex)
+      {
+        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
       }
     }
   }
 
-  // Generates a random unique shift ID (4-digit number)
-  private Integer generateUniqueShiftID()
+  // Generates a unique 4-digit shift ID
+  private int generateUniqueShiftID()
   {
     int newID;
     boolean exists;
 
     do
     {
-      // Generate random 4-digit number
       newID = (int) (Math.random() * 9000) + 1000;
       exists = false;
 
       try
       {
-        // Check if ID already exists in database
         String sql = "SELECT shiftID FROM Shift WHERE shiftID = ?";
         PreparedStatement ps = db.getDbConn().prepareStatement(sql);
         ps.setInt(1, newID);
-
         ResultSet rs = ps.executeQuery();
 
         if (rs.next())
         {
-          exists = true; // ID already exists
+          exists = true;
         }
 
         rs.close();
@@ -154,10 +144,10 @@ public class AddShiftGUI extends JFrame implements ActionListener
       }
       catch (Exception e)
       {
-        System.out.println("Error checking shiftID uniqueness");
+        System.out.println("Error checking shiftID uniqueness: " + e.getMessage());
       }
 
-    } while (exists); // repeat until unique ID is found
+    } while (exists);
 
     return newID;
   }
