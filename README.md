@@ -13,5 +13,8 @@ Managers have to sign up with a unique username and any password
 Employees have to sign up with a unique username, any password, and the manager code of there specific manager
 After any account is created, it will display there specific id. 
 
+Managers after logging in have the ability to assign, remove, update, and view all shifts to a employee under them. You cannot do any of this to employee's assigned to someone else. 
+
+Everything is linked in GUI and tested so please dont worry about errors. 
 
 Have fun!
