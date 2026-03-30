@@ -28,7 +28,7 @@ public class UpdateShiftGUI extends JFrame implements ActionListener
   private JTextField newDateField;
   private JLabel shiftLabel;
   private JTextField shiftIDField;
-
+  
   // Buttons
   private JButton updateButton;
   private JButton closeButton;
@@ -37,13 +37,15 @@ public class UpdateShiftGUI extends JFrame implements ActionListener
   private JPanel middlePanel;
   private JPanel buttonPanel;
 
+  private Manager man;
   // Constructor: sets up the GUI
-  public UpdateShiftGUI()
+  public UpdateShiftGUI(Manager m)
   {
     super("Update Shift"); // window title
     this.setBounds(300, 300, 300, 300); // position and size
     this.setDefaultCloseOperation(DISPOSE_ON_CLOSE); // close behavior
 
+    man = m;
     // Create labels and input fields
     title = new JLabel("Update Shift");
     newDescriptionLabel = new JLabel("New Description: ");

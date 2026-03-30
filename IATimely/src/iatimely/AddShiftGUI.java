@@ -32,18 +32,21 @@ public class AddShiftGUI extends JFrame implements ActionListener
   private JTextField employeeIDField;
   private JButton addButton;
   private JPanel middlePanel;
-  private JButton closeButton;
   private JPanel buttonPanel;
+
+  private Manager man;
 
   // Database access object
   private dbAccess db;
 
   // Constructor: sets up the GUI window and components
-  public AddShiftGUI()
+  public AddShiftGUI(Manager m)
   {
     super("Add Shift"); // window title
     this.setBounds(300, 300, 400, 400); // position and size
     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // close behavior
+
+    man = m;
 
     // Initialize labels and input fields
     title = new JLabel("Add Shift");
@@ -57,8 +60,6 @@ public class AddShiftGUI extends JFrame implements ActionListener
     // Create buttons and attach event listeners
     addButton = new JButton("Add Shift");
     addButton.addActionListener(this);
-    closeButton = new JButton("Close");
-    closeButton.addActionListener(this);
 
     // Panel to hold input fields
     middlePanel = new JPanel();
@@ -72,7 +73,6 @@ public class AddShiftGUI extends JFrame implements ActionListener
     // Panel to hold buttons
     buttonPanel = new JPanel();
     buttonPanel.add(addButton);
-    buttonPanel.add(closeButton);
 
     // Add components to the frame
     this.add(title, BorderLayout.NORTH);
@@ -87,38 +87,39 @@ public class AddShiftGUI extends JFrame implements ActionListener
   public void actionPerformed(ActionEvent e)
   {
     String command = e.getActionCommand();
-
+    int employeeID = Integer.parseInt(employeeIDField.getText()); // get employee ID
     // If "Add Shift" button is clicked
     if (command.equals("Add Shift"))
     {
-      int shiftID = generateUniqueShiftID(); // generate unique ID
-      int employeeID = Integer.parseInt(employeeIDField.getText()); // get employee ID
-      String description = descriptionField.getText().trim(); // get description
-      String date = dateField.getText().trim(); // get date
-
-      // Create database connection
-      dbAccess db = new dbAccess("iaTimely");
-
-      // Insert shift and link to employee
-      boolean success1 = db.addShift(shiftID, description, date);
-      boolean success2 = db.addShiftEmployee(shiftID, employeeID);
-
-      db.closeDbConn(); // close connection
-
-      // Show success or error message
-      if (success1 && success2)
+      if (db.isEmployeeUnderManager(employeeID, man.getManID()))
       {
-        JOptionPane.showMessageDialog(this, "Shift Added! shift id is " + shiftID);
+        int shiftID = generateUniqueShiftID(); // generate unique ID
+        String description = descriptionField.getText().trim(); // get description
+        String date = dateField.getText().trim(); // get date
+
+        // Create database connection
+        dbAccess db = new dbAccess("iaTimely");
+
+        // Insert shift and link to employee
+        boolean success1 = db.addShift(shiftID, description, date);
+        boolean success2 = db.addShiftEmployee(shiftID, employeeID);
+
+        db.closeDbConn(); // close connection
+
+        // Show success or error message
+        if (success1 && success2)
+        {
+          JOptionPane.showMessageDialog(this, "Shift Added! shift id is " + shiftID);
+        }
+        else
+        {
+          JOptionPane.showMessageDialog(this, "Error Adding Shift.");
+        }
       }
       else
       {
-        JOptionPane.showMessageDialog(this, "Error Adding Shift.");
+        JOptionPane.showMessageDialog(this, "User does have have this employee");
       }
-    }
-    // If "Close" button is clicked
-    else if (command.equals("Close"))
-    {
-      this.dispose(); // close the window
     }
   }
 

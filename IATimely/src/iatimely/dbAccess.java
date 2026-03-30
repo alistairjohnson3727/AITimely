@@ -464,7 +464,36 @@ public class dbAccess
     }
     catch (SQLException e)
     {
-      System.out.println("Error checking employee-manager: " + e.getMessage());
+      System.out.println("Error checking " + e.getMessage());
+      return false;
+    }
+  }
+
+  public boolean isEmpHaveShift(int shiftID, int employeeID)
+  {
+    try
+    {
+      // SQL query to check if the Employee Shift pair exists
+      String sql = "SELECT * FROM ShiftEmployee WHERE shiftID = ? AND employeeID = ?";
+      PreparedStatement ps = this.dbConn.prepareStatement(sql);
+      ps.setInt(1, shiftID);
+      ps.setInt(2, employeeID);
+
+      // Execute query
+      ResultSet rs = ps.executeQuery();
+
+      // True if a record exists
+      boolean exists = rs.next();
+
+      // Close resources
+      rs.close();
+      ps.close();
+
+      return exists;
+    }
+    catch (SQLException e)
+    {
+      System.out.println("Error checking " + e.getMessage());
       return false;
     }
   }

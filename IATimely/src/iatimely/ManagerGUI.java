@@ -37,12 +37,15 @@ public class ManagerGUI extends JFrame implements ActionListener
   private JTable tblEmployees;
   private JScrollPane scrollPane;
 
+  private Manager man;
   // Constructor: sets up manager dashboard
-  public ManagerGUI(Manager man)
+  public ManagerGUI(Manager m)
   {
     super("Manager Dashboard"); // window title
     this.setBounds(150, 150, 550, 300); // position and size
     this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    
+    man = m;
 
     // Get current date
     LocalDate currentDate = LocalDate.now();
@@ -98,21 +101,21 @@ public class ManagerGUI extends JFrame implements ActionListener
   public void actionPerformed(ActionEvent err)
   {
     String command = err.getActionCommand();
-
+    
     // Open Add Shift window
     if (command.equals("Add Shift"))
     {
-      new AddShiftGUI();
+      new AddShiftGUI(man);
     }
     // Open Remove Shift window
     else if (command.equals("Remove Shift"))
     {
-      new RemoveShiftGUI();
+      new RemoveShiftGUI(man);
     }
     // Open Update Shift window
     else if (command.equals("Update Shift"))
     {
-      new UpdateShiftGUI();
+      new UpdateShiftGUI(man);
     }
     // Open View Shift window
     else if (command.equals("View Shift"))
