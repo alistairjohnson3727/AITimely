@@ -19,6 +19,7 @@ import javax.swing.JTextField;
  */
 public class employeeSignUpGUI extends JFrame implements ActionListener
 {
+
   // Labels and input fields
   private JLabel titleLabel;
   private JLabel userLabel;
@@ -69,7 +70,7 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
     centerPanel.add(passField);
     centerPanel.add(idLabel);
     centerPanel.add(idField);
-    
+
     // Button panel: holds buttons
     buttonPanel = new JPanel();
     buttonPanel.add(signUpButton);
@@ -122,7 +123,7 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
         JOptionPane.showMessageDialog(this, "Username taken.");
       }
     }
-    else if(command.equals("Back"))
+    else if (command.equals("Back"))
     {
       new StartGUI(); // return to start page
       this.dispose(); // close current window
@@ -130,38 +131,47 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
   }
 
   // Generate a unique employee ID
-  private Integer generateUniqueEmployeeID()
+  public Integer generateUniqueEmployeeID()
   {
     int newID;
     boolean exists;
 
+    // Initialize database connection
+    dbAccess db = new dbAccess("iaTimely");
+
     do
     {
-      newID = (int) (Math.random() * 9000) + 1000; // random 4-digit ID
+      // Generate random 4-digit number
+      newID = (int) (Math.random() * 9000) + 1000;
       exists = false;
 
       try
       {
-        // Check if ID already exists in the database
-        String sql = "SELECT EmployeeLogin FROM employeeID WHERE employeeID = ?";
+        // Correct SQL query: check if employeeID exists in EmployeeLogin table
+        String sql = "SELECT employeeID FROM EmployeeLogin WHERE employeeID = ?";
         PreparedStatement ps = db.getDbConn().prepareStatement(sql);
         ps.setInt(1, newID);
 
         ResultSet rs = ps.executeQuery();
+
+        // If ID exists, mark as existing
         if (rs.next())
         {
-          exists = true; // ID already exists
+          exists = true;
         }
 
+        // Close resources
         rs.close();
         ps.close();
       }
       catch (Exception e)
       {
-        System.out.println("Error checking employeeID uniqueness");
+        System.out.println("Error checking employeeID uniqueness: " + e.getMessage());
       }
-    } while (exists);
 
+    } while (exists);  // Repeat until unique ID is found
+
+    db.closeDbConn(); // Close database connection
     return newID;
   }
 }

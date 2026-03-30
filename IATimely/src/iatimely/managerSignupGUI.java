@@ -168,48 +168,50 @@ public class managerSignupGUI extends JFrame implements ActionListener
       this.dispose();
     }
   }
-
-  // Generates a unique manager ID that does not already exist in the database
-  private Integer generateUniqueManagerID()
+  
+  //Generates a unique manager ID that does not already exist in the database
+  public Integer generateUniqueManagerID()
   {
     int newID;
     boolean exists;
 
+    // Make sure we have a database connection
+    dbAccess db = new dbAccess("iaTimely");
+
     do
     {
-      // Generate random 4-digit number
+      // Generate a random 4-digit number
       newID = (int) (Math.random() * 9000) + 1000;
       exists = false;
 
       try
       {
-        // Prepare SQL query to check if ID already exists
-        String sql = "SELECT ManagerLogin FROM managerID WHERE managerID = ?";
+        // Correct SQL query: check if managerID exists in ManagerLogin table
+        String sql = "SELECT managerID FROM ManagerLogin WHERE managerID = ?";
         PreparedStatement ps = db.getDbConn().prepareStatement(sql);
         ps.setInt(1, newID);
 
         // Execute query
         ResultSet rs = ps.executeQuery();
 
-        // If ID exists, set exists to true
+        // If a record exists, this ID is already used
         if (rs.next())
         {
           exists = true;
         }
 
-        // Close database resources
+        // Close resources
         rs.close();
         ps.close();
       }
       catch (Exception e)
       {
-        // Handle exception when checking ID uniqueness
-        System.out.println("Error checking managerID uniqueness");
+        System.out.println("Error checking managerID uniqueness: " + e.getMessage());
       }
 
-    } while (exists);  // Repeat until unique ID is found
+    } while (exists);  // Repeat until a unique ID is found
 
-    // Return the unique ID
+    db.closeDbConn(); // Close the database connection
     return newID;
   }
 }
