@@ -88,45 +88,48 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
   @Override
   public void actionPerformed(ActionEvent e)
   {
-    dbAccess db = new dbAccess("iaTimely"); // connect to database
-    String command = e.getActionCommand();
-    String username = userField.getText().trim();
-    int managerID = Integer.parseInt(idField.getText().trim()); // get manager ID
-    
-    if (command.equals("Sign up"))
+    if (e.getSource() == closeButton)
     {
-      // Check if username is available
+      new StartGUI();
+      this.dispose();
+      return;
+    }
+
+    if (e.getSource() == signUpButton)
+    {
+      dbAccess db = new dbAccess("iaTimely");
+
+      String username = userField.getText().trim();
+      int managerID;
+
+      try
+      {
+        managerID = Integer.parseInt(idField.getText().trim());
+      }
+      catch (NumberFormatException ex)
+      {
+        JOptionPane.showMessageDialog(this, "Invalid Manager ID");
+        return;
+      }
+
       if ((db.isEmpUserAvailable(username)) && (db.managerExists(managerID)))
       {
-        try
-        {
-          int employeeID = generateUniqueEmployeeID(); // generate unique employee ID
-          String password = passField.getText().trim();
+        int employeeID = generateUniqueEmployeeID();
+        String password = passField.getText().trim();
 
-          // Add employee account and link to manager
-          boolean success = db.addEmployeeAcc(employeeID, username, password);
-          boolean success2 = db.addEmployeeManager(managerID, employeeID);
-          db.closeDbConn();
+        boolean success = db.addEmployeeAcc(employeeID, username, password);
+        boolean success2 = db.addEmployeeManager(managerID, employeeID);
+        db.closeDbConn();
 
-          if (success && success2)
-          {
-            JOptionPane.showMessageDialog(this, "Employee account created! Your ID is " + employeeID);
-          }
-        }
-        catch (NumberFormatException ex)
+        if (success && success2)
         {
-          JOptionPane.showMessageDialog(this, "Invalid Manager ID");
+          JOptionPane.showMessageDialog(this, "Employee account created! Your ID is " + employeeID);
         }
       }
       else
       {
         JOptionPane.showMessageDialog(this, "Username taken and/or manager code does not exist.");
       }
-    }
-    else if (command.equals("Back"))
-    {
-      new StartGUI(); // return to start page
-      this.dispose(); // close current window
     }
   }
 
