@@ -67,7 +67,7 @@ public class managerSignupGUI extends JFrame implements ActionListener
 
     // Initialize title label
     titleLabel = new JLabel("Sign Up");
-
+    
     // Initialize username label and field
     userLabel = new JLabel("Username: ");
     userField = new JTextField(20);
@@ -108,15 +108,16 @@ public class managerSignupGUI extends JFrame implements ActionListener
   // Handles button clicks and text field actions
   public void actionPerformed(ActionEvent e)
   {
+    // Connect to database
+    dbAccess db = new dbAccess("iaTimely");
+    
     // Generate a unique manager ID
-    int managerID = generateUniqueManagerID();
+    int managerID = db.generateUniqueManagerID();
 
     // Get the entered username and password
     String username = userField.getText().trim();
     String password = passField.getText().trim();
 
-    // Connect to database
-    dbAccess db = new dbAccess("iaTimely");
 
     // Determine which button was pressed
     String command = e.getActionCommand();
@@ -167,51 +168,5 @@ public class managerSignupGUI extends JFrame implements ActionListener
       // Close the current frame
       this.dispose();
     }
-  }
-  
-  //Generates a unique manager ID that does not already exist in the database
-  public Integer generateUniqueManagerID()
-  {
-    int newID;
-    boolean exists;
-
-    // Make sure we have a database connection
-    dbAccess db = new dbAccess("iaTimely");
-
-    do
-    {
-      // Generate a random 4-digit number
-      newID = (int) (Math.random() * 9000) + 1000;
-      exists = false;
-
-      try
-      {
-        // Correct SQL query: check if managerID exists in ManagerLogin table
-        String sql = "SELECT managerID FROM ManagerLogin WHERE managerID = ?";
-        PreparedStatement ps = db.getDbConn().prepareStatement(sql);
-        ps.setInt(1, newID);
-
-        // Execute query
-        ResultSet rs = ps.executeQuery();
-
-        // If a record exists, this ID is already used
-        if (rs.next())
-        {
-          exists = true;
-        }
-
-        // Close resources
-        rs.close();
-        ps.close();
-      }
-      catch (Exception e)
-      {
-        System.out.println("Error checking managerID uniqueness: " + e.getMessage());
-      }
-
-    } while (exists);  // Repeat until a unique ID is found
-
-    db.closeDbConn(); // Close the database connection
-    return newID;
   }
 }

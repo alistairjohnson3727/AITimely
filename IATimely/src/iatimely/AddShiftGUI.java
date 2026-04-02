@@ -84,7 +84,7 @@ public class AddShiftGUI extends JFrame implements ActionListener
 
         if (db.isEmployeeUnderManager(employeeID, man.getManID()))
         {
-          int shiftID = generateUniqueShiftID();
+          int shiftID = db.generateUniqueShiftID();
           String description = descriptionField.getText().trim();
           String date = dateField.getText().trim();
 
@@ -114,41 +114,5 @@ public class AddShiftGUI extends JFrame implements ActionListener
         JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
       }
     }
-  }
-
-  // Generates a unique 4-digit shift ID
-  private int generateUniqueShiftID()
-  {
-    int newID;
-    boolean exists;
-
-    do
-    {
-      newID = (int) (Math.random() * 9000) + 1000;
-      exists = false;
-
-      try
-      {
-        String sql = "SELECT shiftID FROM Shift WHERE shiftID = ?";
-        PreparedStatement ps = db.getDbConn().prepareStatement(sql);
-        ps.setInt(1, newID);
-        ResultSet rs = ps.executeQuery();
-
-        if (rs.next())
-        {
-          exists = true;
-        }
-
-        rs.close();
-        ps.close();
-      }
-      catch (Exception e)
-      {
-        System.out.println("Error checking shiftID uniqueness: " + e.getMessage());
-      }
-
-    } while (exists);
-
-    return newID;
   }
 }

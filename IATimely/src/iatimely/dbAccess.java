@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 // Database access class for handling MySQL operations
 public class dbAccess
@@ -600,6 +602,244 @@ public class dbAccess
       System.out.println("Error checking employee username.");
       return false;
     }
+  }
+
+  // Loads employees assigned to this manager from the database
+  public DefaultTableModel loadEmployees(Manager man)
+  {
+    dbAccess db = new dbAccess("iaTimely");
+
+    // Column names for table
+    String[] columns =
+    {
+      "employee ID", "username"
+    };
+
+    // Create table model
+    DefaultTableModel model = new DefaultTableModel(columns, 0);
+
+    try
+    {
+      // Get manager ID
+      int managerID = man.getManID();
+
+      // SQL query to get employees under this manager
+      String sql
+        = "SELECT EmployeeLogin.employeeID, EmployeeLogin.username "
+        + "FROM EmployeeLogin "
+        + "JOIN EmployeeManager ON EmployeeLogin.employeeID = EmployeeManager.employeeID "
+        + "WHERE EmployeeManager.managerID = ?";
+
+      // Prepare and execute query
+      java.sql.PreparedStatement ps = db.getDbConn().prepareStatement(sql);
+      ps.setInt(1, managerID);
+
+      java.sql.ResultSet rs = ps.executeQuery();
+
+      // Add rows from database
+      while (rs.next())
+      {
+        model.addRow(new Object[]
+        {
+          rs.getInt("employeeID"),
+          rs.getString("username")
+        });
+      }
+      
+      // Close resources
+      rs.close();
+      ps.close();
+    }
+    catch (Exception e)
+    {
+      // Show error message
+      System.out.println(e.getMessage());
+    }
+    return model;
+  }
+
+  // Generates a unique 4-digit shift ID
+  public int generateUniqueShiftID()
+  {
+    int newID;
+    boolean exists;
+    dbAccess db = new dbAccess();
+
+    do
+    {
+      newID = (int) (Math.random() * 9000) + 1000;
+      exists = false;
+
+      try
+      {
+        String sql = "SELECT shiftID FROM Shift WHERE shiftID = ?";
+        PreparedStatement ps = db.getDbConn().prepareStatement(sql);
+        ps.setInt(1, newID);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next())
+        {
+          exists = true;
+        }
+
+        rs.close();
+        ps.close();
+      }
+      catch (Exception e)
+      {
+        System.out.println("Error checking shiftID uniqueness: " + e.getMessage());
+      }
+
+    } while (exists);
+
+    return newID;
+  }
+
+  // Loads shifts for the given employee from the database
+  public DefaultTableModel loadEmployeeShifts(int employeeID)
+  {
+    dbAccess db = new dbAccess("iaTimely");
+
+    // Table column names
+    String[] columns =
+    {
+      "Shift ID", "Description", "Date"
+    };
+
+    // Create table model
+    DefaultTableModel model = new DefaultTableModel(columns, 0);
+
+    try
+    {
+      // SQL query to get shifts for this employee
+      String sql
+        = "SELECT Shift.shiftID, Shift.description, Shift.date "
+        + "FROM Shift "
+        + "JOIN ShiftEmployee ON Shift.shiftID = ShiftEmployee.shiftID "
+        + "WHERE ShiftEmployee.employeeID = ? "
+        + "ORDER BY Shift.date ASC";
+
+      // Prepare and execute query
+      java.sql.PreparedStatement ps = db.getDbConn().prepareStatement(sql);
+      ps.setInt(1, employeeID);
+
+      java.sql.ResultSet rs = ps.executeQuery();
+
+      // Add rows from database to table
+      while (rs.next())
+      {
+        model.addRow(new Object[]
+        {
+          rs.getInt("shiftID"),
+          rs.getString("description"),
+          rs.getString("date")
+        });
+      }
+
+      // return table model
+      return model;
+
+      // Close resources
+      //rs.close();
+      //ps.close();
+    }
+    catch (Exception e)
+    {
+      // Show error message if something goes wrong
+      System.out.println("Error");
+    }
+    return model;
+  }
+
+  // Generate a unique employee ID
+  public Integer generateUniqueEmployeeID()
+  {
+    int newID;
+    boolean exists;
+
+    // Initialize database connection
+    dbAccess db = new dbAccess("iaTimely");
+
+    do
+    {
+      // Generate random 4-digit number
+      newID = (int) (Math.random() * 9000) + 1000;
+      exists = false;
+
+      try
+      {
+        // Correct SQL query: check if employeeID exists in EmployeeLogin table
+        String sql = "SELECT employeeID FROM EmployeeLogin WHERE employeeID = ?";
+        PreparedStatement ps = db.getDbConn().prepareStatement(sql);
+        ps.setInt(1, newID);
+
+        ResultSet rs = ps.executeQuery();
+
+        // If ID exists, mark as existing
+        if (rs.next())
+        {
+          exists = true;
+        }
+
+        // Close resources
+        rs.close();
+        ps.close();
+      }
+      catch (Exception e)
+      {
+        System.out.println("Error checking employeeID uniqueness: " + e.getMessage());
+      }
+
+    } while (exists);  // Repeat until unique ID is found
+
+    db.closeDbConn(); // Close database connection
+    return newID;
+  }
+
+  //Generates a unique manager ID that does not already exist in the database
+  public Integer generateUniqueManagerID()
+  {
+    int newID;
+    boolean exists;
+
+    // Make sure we have a database connection
+    dbAccess db = new dbAccess("iaTimely");
+
+    do
+    {
+      // Generate a random 4-digit number
+      newID = (int) (Math.random() * 9000) + 1000;
+      exists = false;
+
+      try
+      {
+        // Correct SQL query: check if managerID exists in ManagerLogin table
+        String sql = "SELECT managerID FROM ManagerLogin WHERE managerID = ?";
+        PreparedStatement ps = db.getDbConn().prepareStatement(sql);
+        ps.setInt(1, newID);
+
+        // Execute query
+        ResultSet rs = ps.executeQuery();
+
+        // If a record exists, this ID is already used
+        if (rs.next())
+        {
+          exists = true;
+        }
+
+        // Close resources
+        rs.close();
+        ps.close();
+      }
+      catch (Exception e)
+      {
+        System.out.println("Error checking managerID uniqueness: " + e.getMessage());
+      }
+
+    } while (exists);  // Repeat until a unique ID is found
+
+    db.closeDbConn(); // Close the database connection
+    return newID;
   }
 
   // Check if a manager username is available

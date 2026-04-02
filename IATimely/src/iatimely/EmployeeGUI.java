@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class EmployeeGUI extends JFrame implements ActionListener
 {
-
+  dbAccess db = new dbAccess();
   // Labels to display info
   private JLabel title;
   private JLabel date;
@@ -66,8 +66,7 @@ public class EmployeeGUI extends JFrame implements ActionListener
     this.add(closeButton, BorderLayout.SOUTH);
 
     // Load employee shifts automatically
-    loadEmployeeShifts(emp);
-
+    tblShifts.setModel(db.loadEmployeeShifts(emp.getEmployeeID()));
     this.setVisible(true); // show window
   }
 
@@ -82,71 +81,6 @@ public class EmployeeGUI extends JFrame implements ActionListener
     {
       new StartGUI(); // go back to start screen
       this.dispose(); // close current window
-    }
-  }
-
-  // Loads shifts for the given employee from the database
-  private void loadEmployeeShifts(Employee emp)
-  {
-    dbAccess db = new dbAccess("iaTimely");
-
-    try
-    {
-      // Get employee ID from object
-      int employeeID = emp.getEmployeeID();
-
-      // Check if ID is valid
-      if (employeeID == -1)
-      {
-        JOptionPane.showMessageDialog(this, "Employee ID not set!");
-        return;
-      }
-
-      // SQL query to get shifts for this employee
-      String sql
-        = "SELECT Shift.shiftID, Shift.description, Shift.date "
-        + "FROM Shift "
-        + "JOIN ShiftEmployee ON Shift.shiftID = ShiftEmployee.shiftID "
-        + "WHERE ShiftEmployee.employeeID = ? "
-        + "ORDER BY Shift.date ASC";
-
-      // Prepare and execute query
-      java.sql.PreparedStatement ps = db.getDbConn().prepareStatement(sql);
-      ps.setInt(1, employeeID);
-
-      java.sql.ResultSet rs = ps.executeQuery();
-
-      // Table column names
-      String[] columns =
-      {
-        "Shift ID", "Description", "Date"
-      };
-
-      // Create table model
-      DefaultTableModel model = new DefaultTableModel(columns, 0);
-
-      // Add rows from database to table
-      while (rs.next())
-      {
-        model.addRow(new Object[]
-        {
-          rs.getInt("shiftID"),
-          rs.getString("description"),
-          rs.getString("date")
-        });
-      }
-
-      // Set table model
-      tblShifts.setModel(model);
-
-      // Close resources
-      rs.close();
-      ps.close();
-    }
-    catch (Exception e)
-    {
-      // Show error message if something goes wrong
-      JOptionPane.showMessageDialog(this, "Error loading shifts: " + e.getMessage());
     }
   }
 }

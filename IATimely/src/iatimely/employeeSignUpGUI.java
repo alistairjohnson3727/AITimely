@@ -114,7 +114,7 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
 
       if ((db.isEmpUserAvailable(username)) && (db.managerExists(managerID)))
       {
-        int employeeID = generateUniqueEmployeeID();
+        int employeeID = db.generateUniqueEmployeeID();
         String password = passField.getText().trim();
 
         boolean success = db.addEmployeeAcc(employeeID, username, password);
@@ -131,50 +131,5 @@ public class employeeSignUpGUI extends JFrame implements ActionListener
         JOptionPane.showMessageDialog(this, "Username taken and/or manager code does not exist.");
       }
     }
-  }
-
-  // Generate a unique employee ID
-  public Integer generateUniqueEmployeeID()
-  {
-    int newID;
-    boolean exists;
-
-    // Initialize database connection
-    dbAccess db = new dbAccess("iaTimely");
-
-    do
-    {
-      // Generate random 4-digit number
-      newID = (int) (Math.random() * 9000) + 1000;
-      exists = false;
-
-      try
-      {
-        // Correct SQL query: check if employeeID exists in EmployeeLogin table
-        String sql = "SELECT employeeID FROM EmployeeLogin WHERE employeeID = ?";
-        PreparedStatement ps = db.getDbConn().prepareStatement(sql);
-        ps.setInt(1, newID);
-
-        ResultSet rs = ps.executeQuery();
-
-        // If ID exists, mark as existing
-        if (rs.next())
-        {
-          exists = true;
-        }
-
-        // Close resources
-        rs.close();
-        ps.close();
-      }
-      catch (Exception e)
-      {
-        System.out.println("Error checking employeeID uniqueness: " + e.getMessage());
-      }
-
-    } while (exists);  // Repeat until unique ID is found
-
-    db.closeDbConn(); // Close database connection
-    return newID;
   }
 }
